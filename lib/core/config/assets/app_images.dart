@@ -1,7 +1,6 @@
-class AppVectors {
+class AppImages {
 
-  static const basePath = 'assets/vectors/';
-  static const format = '.svg';
-  static const dark = '${basePath}Icon=Dark$format';
+  static const basePath = 'assets/image/';
+  static const Hello = '${basePath}Group1.png';
 
 }
