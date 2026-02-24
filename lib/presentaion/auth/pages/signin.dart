@@ -35,7 +35,7 @@ class LoginPage extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text(
-                  "RDAPP",
+                  "Connexion",
                   style: TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.bold),
                 ),
                 const SizedBox(height: 40),
