@@ -11,7 +11,7 @@ class RdAppBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.fromLTRB(24, 24, 24, 20), 
       decoration: const BoxDecoration(
-        color: AppColors.secondBackground, 
+        color: AppColors.background, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),
