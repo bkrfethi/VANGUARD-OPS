@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:vanguard_ops/core/config/theme/app_colors.dart';
-
-import 'package:flutter/material.dart';
 import 'package:vanguard_ops/core/config/assets/app_images.dart';
 
 class RdAppBar extends StatelessWidget {
@@ -11,9 +9,9 @@ class RdAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.fromLTRB(24, 60, 24, 20), // Padding pour l'encoche (status bar)
+      padding: const EdgeInsets.fromLTRB(24, 24, 24, 20), 
       decoration: const BoxDecoration(
-        color: Color(0xff121212), // Fond noir profond
+        color: AppColors.secondBackground, 
         borderRadius: BorderRadius.only(
           bottomLeft: Radius.circular(40),
           bottomRight: Radius.circular(40),
@@ -23,7 +21,6 @@ class RdAppBar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
-          // Localisation et Date (Texte gris petit)
           const Text(
             "Kolkata, India - 02/11/2024, 07:30:59 PM",
             style: TextStyle(
@@ -34,7 +31,6 @@ class RdAppBar extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           
-          // Ligne principale : Titre + Icône + Image
           Row(
             children: [
               const Text(
@@ -48,16 +44,14 @@ class RdAppBar extends StatelessWidget {
               ),
               const Spacer(),
               
-              // Icône d'alerte/notification (Petite icône à côté de la photo)
               Image.asset(
-                AppImages.notificationIcon, // Remplace par ton chemin exact
+                AppImages.notificationIcon, 
                 width: 24,
                 height: 24,
                 color: Colors.white70,
               ),
               const SizedBox(width: 16),
               
-              // Image de l'utilisateur (La fille)
               CircleAvatar(
                 radius: 25,
                 backgroundColor: Colors.grey[800],
