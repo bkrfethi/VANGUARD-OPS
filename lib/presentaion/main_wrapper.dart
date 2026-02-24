@@ -19,7 +19,7 @@ class MainWrapper extends StatelessWidget {
             children: const [
               Homepage(),    
               contactpage(),
-              Settingpage(),
+              SettingsPage(),
             
             ],
           );

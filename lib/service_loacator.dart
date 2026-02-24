@@ -6,6 +6,7 @@ import 'package:vanguard_ops/data/auth/serevices/auth_supabase_service.dart';
 import 'package:vanguard_ops/domain/auth/repositoreies/auth.dart';
 import 'package:vanguard_ops/domain/auth/usecases/SigninUseCase.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
+import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 
 final sl =GetIt.instance;
 
@@ -28,5 +29,6 @@ Future<void> initializeDependencies() async {
     //cubit 
 sl.registerFactory(() => SigninCubit());
   sl.registerFactory(() => NavigationCubit(sl<SharedPreferences>()));
+  sl.registerFactory(() => SettingsCubit());
 
 }

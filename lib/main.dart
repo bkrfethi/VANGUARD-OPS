@@ -6,6 +6,7 @@ import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/auth/pages/signin.dart';
 import 'package:vanguard_ops/presentaion/main_wrapper.dart';
+import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 import 'package:vanguard_ops/service_loacator.dart';
 
 void main() async {
@@ -29,15 +30,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      // On injecte le SigninCubit au sommet de l'application
       providers: [
         BlocProvider(create: (context) => sl<SigninCubit>()),
         BlocProvider(create: (context) => sl<NavigationCubit>()),
+        BlocProvider(create: (context) => sl<SettingsCubit>()), 
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          brightness: Brightness.dark, // Pour coller au design RDAPP
+          brightness: Brightness.dark, 
         ),
         home: MainWrapper(),
       ),
