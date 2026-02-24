@@ -1,6 +1,8 @@
 class AppImages {
 
   static const basePath = 'assets/image/';
-  static const Hello = '${basePath}Group1.png';
+  static const home='${basePath}home.png';
+  static const contact= '${basePath}contact.png';
+  static const setting ='${basePath}setting.png';
 
 }
