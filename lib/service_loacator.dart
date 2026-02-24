@@ -10,6 +10,7 @@ Future<void> initializedependencies() async {
 
 
 //repositories 
+  sl.registerSingleton<AuthRepository>(AuthRepositoryImpl());
 
 
 
