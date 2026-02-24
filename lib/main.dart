@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/auth/pages/signin.dart';
+import 'package:vanguard_ops/presentaion/main_wrapper.dart';
 import 'package:vanguard_ops/service_loacator.dart';
 
 void main() async {
@@ -30,13 +32,14 @@ class MyApp extends StatelessWidget {
       // On injecte le SigninCubit au sommet de l'application
       providers: [
         BlocProvider(create: (context) => sl<SigninCubit>()),
+        BlocProvider(create: (context) => sl<NavigationCubit>()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           brightness: Brightness.dark, // Pour coller au design RDAPP
         ),
-        home: LoginPage(),
+        home: MainWrapper(),
       ),
     );
   }
