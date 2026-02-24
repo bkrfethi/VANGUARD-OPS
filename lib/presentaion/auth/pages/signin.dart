@@ -20,7 +20,6 @@ class LoginPage extends StatelessWidget {
       body: BlocListener<SigninCubit, SigninState>(
         listener: (context, state) {
           if (state is SigninSuccess) {
-            // Une fois connecté, on vide la pile et on va au dashboard
             AppNavigator.pushAndRemove(context, const Scaffold(body: Center(child: Text("Main Wrapper"))));
           }
           if (state is SigninFailure) {
@@ -41,7 +40,6 @@ class LoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 40),
                 
-                // Champ Email
                 _buildTextField(
                   controller: _emailCon,
                   hintText: "Email d'agent",
@@ -50,7 +48,6 @@ class LoginPage extends StatelessWidget {
                 
                 const SizedBox(height: 16),
                 
-                // Champ Password
                 _buildTextField(
                   controller: _passwordCon,
                   hintText: "Mot de passe",
@@ -59,10 +56,8 @@ class LoginPage extends StatelessWidget {
                 
                 const SizedBox(height: 30),
 
-                // Bouton Dynamique
                 BlocBuilder<SigninCubit, SigninState>(
                   builder: (context, state) {
-                    // Logique de couleur : Rouge si Loading ou Success, sinon Gris
                     bool isActive = state is SigninLoading || state is SigninSuccess;
                     
                     return SizedBox(
@@ -70,7 +65,7 @@ class LoginPage extends StatelessWidget {
                       height: 60,
                       child: ElevatedButton(
                         onPressed: state is SigninLoading 
-                            ? null // Désactivé pendant le chargement
+                            ? null 
                             : () {
                                 context.read<SigninCubit>().execute(
                                   UserSigninReq(
