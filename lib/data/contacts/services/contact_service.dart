@@ -36,7 +36,7 @@ final List<Map<String, dynamic>> _staticJsonData = [
   ];
 
   @override
-  Future<Either<String, List<ContactModel>>> fetchContacts() async {
+  Future<Either> fetchContacts() async {
     try {
       await Future.delayed(const Duration(seconds: 1));
 

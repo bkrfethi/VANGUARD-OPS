@@ -1,26 +1,34 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:dartz/dartz.dart';
+import 'package:vanguard_ops/data/contacts/services/contact_service.dart';
 import 'package:vanguard_ops/domain/contacts/entities/contact.dart';
 import 'package:vanguard_ops/domain/contacts/repository/contact_repository.dart';
+import 'package:vanguard_ops/service_loacator.dart';
 import '../models/contact_model.dart';
 
 class ContactRepositoryImpl implements ContactRepository {
-  final SupabaseClient supabase;
-  ContactRepositoryImpl(this.supabase);
 
-  @override
-  Future<List<ContactEntity>> getContacts() async {
-    final response = await supabase.from('contacts').select();
-    return response.map((json) => ContactModel.fromJson(json)).toList();
+
+ @override
+  Future<Either> getContacts() async {
+    final result = await sl<ContactService>().fetchContacts();
+
+    return result.fold(
+      (error) => Left(error), 
+      (models) => Right(models),
+    );
   }
 
   @override
-  Future<void> createContact(ContactEntity contact) async {
+  Future<Either> createContact(ContactEntity contact) async {
     final model = ContactModel(
+      id: contact.id,
       name: contact.name,
       phone: contact.phone,
       type: contact.type,
       hasAlert: contact.hasAlert,
     );
-    await supabase.from('contacts').insert(model.toJson());
+
+    return await sl<ContactService>().saveContact(model);
   }
 }
+
