@@ -8,6 +8,7 @@ import 'package:vanguard_ops/data/contacts/services/contact_service.dart';
 import 'package:vanguard_ops/domain/auth/repositoreies/auth.dart';
 import 'package:vanguard_ops/domain/auth/usecases/SigninUseCase.dart';
 import 'package:vanguard_ops/domain/contacts/repository/contact_repository.dart';
+import 'package:vanguard_ops/domain/contacts/usecases/GetContactsUseCase.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 
@@ -30,6 +31,9 @@ Future<void> initializeDependencies() async {
 
   // usecese 
     sl.registerSingleton<SigninUseCase>(SigninUseCase());
+    sl.registerSingleton<CreateContactUseCase>(CreateContactUseCase());
+    sl.registerSingleton<CreateContactUseCase>(CreateContactUseCase());
+
 
     //cubit 
   sl.registerFactory(() => SigninCubit());
