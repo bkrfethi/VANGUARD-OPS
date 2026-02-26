@@ -76,7 +76,7 @@ class ContactsPage extends StatelessWidget {
       width: double.infinity,
       height: 56,
       decoration: BoxDecoration(
-        color: const Color(0xFFB71C1C), 
+        color: AppColors.primary, 
         borderRadius: BorderRadius.circular(28),
       ),
       child: const Center(
