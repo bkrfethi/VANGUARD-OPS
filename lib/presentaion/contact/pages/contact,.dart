@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
  import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vanguard_ops/core/config/assets/app_images.dart';
+import 'package:vanguard_ops/core/config/theme/app_colors.dart';
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart' show ContactsCubit;
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_state.dart';
 import '../widgets/contact_card.dart';
@@ -14,16 +16,16 @@ class ContactsPage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          const RdAppBar(), // Ton AppBar personnalisée
+          const RdAppBar(), 
           Expanded(
             child: BlocBuilder<ContactsCubit, ContactsState>(
               builder: (context, state) {
                 if (state is ContactsLoading) {
-                  return const Center(child: CircularProgressIndicator(color: Colors.red));
+                  return const Center(child: CircularProgressIndicator(color: AppColors.primary));
                 }
                 
                 if (state is ContactsError) {
-                  return Center(child: Text(state.message, style: const TextStyle(color: Colors.white)));
+                  return Center(child: Text(state.message, style: const TextStyle(color:AppColors.secondBackground)));
                 }
 
                 if (state is ContactsLoaded) {
@@ -33,10 +35,10 @@ class ContactsPage extends StatelessWidget {
                   return ListView(
                     padding: const EdgeInsets.all(16),
                     children: [
-                      _buildHeader("Nearby Police Stations", Icons.wifi),
+                      _buildHeader("Nearby Police Stations", AppImages.signal),
                       ...police.map((c) => ContactCard(contact: c)),
                       const SizedBox(height: 24),
-                      _buildHeader("My Contacts", Icons.refresh),
+                     _buildHeader("My Contacts", AppImages.reload),
                       ...personal.map((c) => ContactCard(contact: c)),
                       const SizedBox(height: 24),
                       _buildAddButton(),
@@ -52,14 +54,18 @@ class ContactsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(String title, IconData icon) {
+  Widget _buildHeader(String title, String imagePath ) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(title, style: const TextStyle(color: Colors.grey, fontSize: 18, fontWeight: FontWeight.bold)),
-          Icon(icon, color: Colors.red, size: 20),
+          Text(title, style: const TextStyle(color: AppColors.secondBackground, fontSize: 18, fontWeight: FontWeight.bold)),
+          Image.asset(
+          imagePath,
+          fit: BoxFit.contain,
+          colorBlendMode: BlendMode.srcIn,
+        ),
         ],
       ),
     );
@@ -70,7 +76,7 @@ class ContactsPage extends StatelessWidget {
       width: double.infinity,
       height: 56,
       decoration: BoxDecoration(
-        color: const Color(0xFFB71C1C), // Rouge sombre
+        color: const Color(0xFFB71C1C), 
         borderRadius: BorderRadius.circular(28),
       ),
       child: const Center(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:vanguard_ops/core/config/assets/app_images.dart';
+import 'package:vanguard_ops/core/config/theme/app_colors.dart';
 import 'package:vanguard_ops/domain/contacts/entities/contact.dart';
 
 class ContactCard extends StatelessWidget {
@@ -11,8 +13,8 @@ class ContactCard extends StatelessWidget {
       margin: const EdgeInsets.only(bottom: 12),
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       decoration: BoxDecoration(
-        color: const Color(0xFF121212),
-        borderRadius: BorderRadius.circular(12),
+        color: AppColors.background,
+        borderRadius: BorderRadius.circular(9),
       ),
       child: Row(
         children: [
@@ -20,14 +22,14 @@ class ContactCard extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(contact.name, style: const TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.w500)),
-                Text(contact.phone, style: const TextStyle(color: Colors.grey, fontSize: 14)),
+                Text(contact.name, style: const TextStyle(color: AppColors.white, fontSize: 16, fontWeight: FontWeight.w500)),
+                Text(contact.phone, style: const TextStyle(color: AppColors.greyfill, fontSize: 14)),
               ],
             ),
           ),
-          const Icon(Icons.person_pin_circle, color: Colors.red),
+           Image.asset(AppImages.contactlogo),
           const SizedBox(width: 8),
-          const Icon(Icons.more_vert, color: Colors.grey),
+          const Icon(Icons.more_vert, color:AppColors.secondBackground),
         ],
       ),
     );
