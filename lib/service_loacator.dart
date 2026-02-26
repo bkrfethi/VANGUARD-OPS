@@ -10,6 +10,7 @@ import 'package:vanguard_ops/domain/auth/usecases/SigninUseCase.dart';
 import 'package:vanguard_ops/domain/contacts/repository/contact_repository.dart';
 import 'package:vanguard_ops/domain/contacts/usecases/GetContactsUseCase.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
+import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
 import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 
 final sl =GetIt.instance;
@@ -31,13 +32,13 @@ Future<void> initializeDependencies() async {
 
   // usecese 
     sl.registerSingleton<SigninUseCase>(SigninUseCase());
-    sl.registerSingleton<CreateContactUseCase>(CreateContactUseCase());
-    sl.registerSingleton<CreateContactUseCase>(CreateContactUseCase());
+    sl.registerSingleton<GetContactsUseCase>(GetContactsUseCase());
 
 
     //cubit 
   sl.registerFactory(() => SigninCubit());
   sl.registerFactory(() => NavigationCubit(sl<SharedPreferences>()));
   sl.registerFactory(() => SettingsCubit());
+  sl.registerFactory(() => ContactsCubit());
 
 }

@@ -4,7 +4,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
-import 'package:vanguard_ops/presentaion/auth/pages/signin.dart';
+import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
 import 'package:vanguard_ops/presentaion/main_wrapper.dart';
 import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 import 'package:vanguard_ops/service_loacator.dart';
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SigninCubit>()),
         BlocProvider(create: (context) => sl<NavigationCubit>()),
         BlocProvider(create: (context) => sl<SettingsCubit>()), 
+BlocProvider(create: (context) => sl<ContactsCubit>()..loadContacts()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
