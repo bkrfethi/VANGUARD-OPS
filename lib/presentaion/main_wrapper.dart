@@ -18,7 +18,7 @@ class MainWrapper extends StatelessWidget {
             index: activeIndex,
             children: const [
               Homepage(),    
-              contactpage(),
+              ContactsPage(),
               SettingsPage(),
             
             ],
