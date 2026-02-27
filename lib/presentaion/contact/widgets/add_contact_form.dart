@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vanguard_ops/core/config/theme/app_colors.dart';
 
 class AddContactForm extends StatefulWidget {
   final Function(String name, String phone, String type) onSave;
@@ -29,9 +30,9 @@ class _AddContactFormState extends State<AddContactForm> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Center(child: Container(width: 50, height: 5, decoration: BoxDecoration(color: Colors.grey[800], borderRadius: BorderRadius.circular(10)))),
+          Center(child: Container(width: 50, height: 5, decoration: BoxDecoration(color: AppColors.secondBackground, borderRadius: BorderRadius.circular(10)))),
           const SizedBox(height: 20),
-          const Text("New Contact", style: TextStyle(color: Colors.white, fontSize: 22, fontWeight: FontWeight.bold)),
+          const Text("New Contact", style: TextStyle(color: AppColors.white, fontSize: 22, fontWeight: FontWeight.bold)),
           const SizedBox(height: 20),
           _buildTextField("Full Name", _nameController, Icons.person_outline),
           const SizedBox(height: 15),
@@ -42,7 +43,7 @@ class _AddContactFormState extends State<AddContactForm> {
           ElevatedButton(
             onPressed: () => widget.onSave(_nameController.text, _phoneController.text, _selectedType),
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFB71C1C),
+              backgroundColor: AppColors.primary,
               minimumSize: const Size(double.infinity, 55),
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
             ),
@@ -88,9 +89,9 @@ class _AddContactFormState extends State<AddContactForm> {
         decoration: BoxDecoration(
           color: isSelected ? Colors.red.withOpacity(0.2) : Colors.transparent,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: isSelected ? Colors.red : Colors.grey[800]!),
+          border: Border.all(color: isSelected ? AppColors.primary : AppColors.secondBackground),
         ),
-        child: Text(label, style: TextStyle(color: isSelected ? Colors.red : Colors.grey)),
+        child: Text(label, style: TextStyle(color: isSelected ?  AppColors.primary : AppColors.secondBackground)),
       ),
     );
   }
