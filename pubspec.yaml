@@ -37,9 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.8
   shared_preferences: ^2.5.4
   equatable: ^2.0.8
-  Maps_flutter:
-  geolocator: ^14.0.2
   permission_handler: 
+  geolocator: ^14.0.2
 
 
 
