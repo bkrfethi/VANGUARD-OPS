@@ -39,6 +39,7 @@ sl.registerSingleton<AlertRepository>(AlertRepositoryImpl());
     sl.registerSingleton<GetContactsUseCase>(GetContactsUseCase());
 
 
+    //cubit 
   sl.registerFactory(() => SigninCubit());
   sl.registerFactory(() => NavigationCubit(sl<SharedPreferences>()));
   sl.registerFactory(() => SettingsCubit());
