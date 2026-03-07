@@ -1,3 +1,5 @@
+import 'package:vanguard_ops/domain/alert/entities/alert_entity.dart';
+
 abstract class AlertState {}
 
 class AlertInitial extends AlertState {}
