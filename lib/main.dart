@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
+import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart' show AlertCubit;
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
 import 'package:vanguard_ops/presentaion/main_wrapper.dart';
@@ -35,7 +36,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<SigninCubit>()),
         BlocProvider(create: (context) => sl<NavigationCubit>()),
         BlocProvider(create: (context) => sl<SettingsCubit>()), 
-BlocProvider(create: (context) => sl<ContactsCubit>()..loadContacts()),
+        BlocProvider(create: (context) => sl<ContactsCubit>()..loadContacts()),
+        BlocProvider(create: (context) => sl<AlertCubit>()), 
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

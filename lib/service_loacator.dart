@@ -12,6 +12,7 @@ import 'package:vanguard_ops/domain/auth/repositoreies/auth.dart';
 import 'package:vanguard_ops/domain/auth/usecases/SigninUseCase.dart';
 import 'package:vanguard_ops/domain/contacts/repository/contact_repository.dart';
 import 'package:vanguard_ops/domain/contacts/usecases/GetContactsUseCase.dart';
+import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
 import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
@@ -44,5 +45,5 @@ sl.registerSingleton<AlertRepository>(AlertRepositoryImpl());
   sl.registerFactory(() => NavigationCubit(sl<SharedPreferences>()));
   sl.registerFactory(() => SettingsCubit());
   sl.registerFactory(() => ContactsCubit());
-
+sl.registerFactory(() => AlertCubit()); 
 }
