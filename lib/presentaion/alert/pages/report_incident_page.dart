@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
 import 'package:vanguard_ops/core/config/theme/app_colors.dart';
-import 'package:vanguard_ops/presentation/alert/bloc/alert_cubit.dart';
-import 'package:vanguard_ops/presentation/alert/bloc/alert_state.dart';
+import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart';
+import 'package:vanguard_ops/presentaion/alert/bloc/alert_state.dart';
 
 class ReportIncidentPage extends StatelessWidget {
   const ReportIncidentPage({super.key});
@@ -11,7 +10,7 @@ class ReportIncidentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // Formatage de la date comme sur ton UI
-    final String formattedDate = DateFormat('dd/MM/yyyy, hh:mm:ss a').format(DateTime.now());
+    //final String formattedDate = DateFormat('dd/MM/yyyy, hh:mm:ss a').format(DateTime.now());
 
     return Scaffold(
       backgroundColor: Colors.black,
@@ -30,10 +29,10 @@ class ReportIncidentPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "Kolkata, India - $formattedDate",
-              style: TextStyle(color: Colors.grey[600], fontSize: 12),
-            ),
+            // Text(
+            //   "Kolkata, India - $formattedDate",
+            //   style: TextStyle(color: Colors.grey[600], fontSize: 12),
+            // ),
             const SizedBox(height: 8),
             const Text(
               "RDAPP",
@@ -51,11 +50,11 @@ class ReportIncidentPage extends StatelessWidget {
             const SizedBox(height: 16),
 
             // 2. Bloc Date & Time
-            _buildInfoCard(
-              title: "Date & Time",
-              subtitle: formattedDate,
-              icon: Icons.calendar_today_outlined,
-            ),
+            // _buildInfoCard(
+            //   title: "Date & Time",
+            //   subtitle: formattedDate,
+            //   icon: Icons.calendar_today_outlined,
+            // ),
 
             const SizedBox(height: 16),
 
