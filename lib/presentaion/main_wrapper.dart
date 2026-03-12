@@ -17,7 +17,7 @@ class MainWrapper extends StatelessWidget {
           return IndexedStack(
             index: activeIndex,
             children: const [
-              Homepage(),    
+              ReportIncidentPage(),    
               ContactsPage(),
               SettingsPage(),
             
