@@ -56,7 +56,6 @@ class AlertCubit extends Cubit<AlertState> {
     });
   }
 
-  // Envoi effectif à Supabase
   Future<void> _sendFinalAlert() async {
     emit(AlertSending());
     
@@ -65,7 +64,7 @@ class AlertCubit extends Cubit<AlertState> {
     result.fold(
       (error) => emit(AlertError(error)),
       (alert) {
-        _activeAlert = alert; // On garde l'ID pour une éventuelle annulation
+        _activeAlert = alert; 
         emit(AlertSuccess(alert));
       }
     );
