@@ -155,31 +155,58 @@ class MapAlertPage extends StatelessWidget {
 
   // Gestion de la carte vs Windows
   Widget _buildMapBackground(LatLng pos) {
+    // 1. Gestion Windows (Incompatibilité plugin)
     if (!kIsWeb && Platform.isWindows) {
-      return Container(
-        width: double.infinity,
-        height: double.infinity,
-        color: const Color(0xFF0A0A0A),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(Icons.map_outlined, color: Colors.white.withOpacity(0.1), size: 100),
-              const SizedBox(height: 10),
-              Text("MAP PREVIEW NOT AVAILABLE ON WINDOWS", style: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 10, letterSpacing: 1.5)),
-            ],
-          ),
-        ),
-      );
+      return _buildPlaceholder("MAP PREVIEW NOT AVAILABLE ON WINDOWS");
     }
-    return GoogleMap(
-      initialCameraPosition: CameraPosition(target: pos, zoom: 16),
-      mapType: MapType.normal, 
-      zoomControlsEnabled: false,
-      markers: { Marker(markerId: const MarkerId('sos'), position: pos) },
-    );
+
+    // 2. Gestion Web / Android / iOS
+    try {
+      return GoogleMap(
+        initialCameraPosition: CameraPosition(target: pos, zoom: 16),
+        mapType: MapType.normal,
+        zoomControlsEnabled: false,
+        myLocationButtonEnabled: false,
+        markers: {
+          Marker(
+            markerId: const MarkerId('sos'),
+            position: pos,
+            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
+          )
+        },
+      );
+    } catch (e) {
+      // Si le script Web n'est pas encore prêt, on affiche un chargement propre
+      return _buildPlaceholder("INITIALIZING TACTICAL MAP...");
+    }
   }
 
+  // Widget de remplacement commun
+  Widget _buildPlaceholder(String message) {
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: const Color(0xFF0A0A0A),
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.map_outlined, color: Colors.white.withOpacity(0.1), size: 100),
+            const SizedBox(height: 10),
+            Text(
+              message,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white.withOpacity(0.3),
+                fontSize: 10,
+                letterSpacing: 1.5,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
   Widget _buildGradientOverlay() {
     return Container(
       decoration: BoxDecoration(
