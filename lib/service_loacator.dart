@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
+import 'package:vanguard_ops/core/services/localisaation_services.dart';
 import 'package:vanguard_ops/data/alert/repository/alert_repository.dart';
 import 'package:vanguard_ops/data/alert/services/alert_supabase_service.dart';
 import 'package:vanguard_ops/data/auth/repositoires/auth.dart';
@@ -22,6 +23,7 @@ final sl =GetIt.instance;
 Future<void> initializeDependencies() async {
     final sharedPrefs = await SharedPreferences.getInstance();
   sl.registerSingleton<SharedPreferences>(sharedPrefs);
+  sl.registerLazySingleton<LocationService>(() => LocationService());
   // services 
 
     sl.registerSingleton<AuthSupabaseService>(AuthSupabaseServiceImpl());
