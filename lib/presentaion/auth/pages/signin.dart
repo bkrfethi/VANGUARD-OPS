@@ -6,6 +6,7 @@ import 'package:vanguard_ops/core/config/theme/app_colors.dart';
 import 'package:vanguard_ops/data/auth/models/user_sognin_req.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_state.dart';
+import 'package:vanguard_ops/presentaion/main_wrapper.dart';
 
 class LoginPage extends StatelessWidget {
   LoginPage({super.key});
@@ -20,7 +21,7 @@ class LoginPage extends StatelessWidget {
       body: BlocListener<SigninCubit, SigninState>(
         listener: (context, state) {
           if (state is SigninSuccess) {
-            AppNavigator.pushAndRemove(context, const Scaffold(body: Center(child: Text("Main Wrapper"))));
+            AppNavigator.pushAndRemove(context, MainWrapper() );
           }
           if (state is SigninFailure) {
             ScaffoldMessenger.of(context).showSnackBar(

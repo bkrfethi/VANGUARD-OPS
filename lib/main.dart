@@ -7,7 +7,6 @@ import 'package:vanguard_ops/presentaion/AuthWrapper.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart' show AlertCubit;
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
-import 'package:vanguard_ops/presentaion/main_wrapper.dart';
 import 'package:vanguard_ops/presentaion/setting/bloc/settings_cubit.dart';
 import 'package:vanguard_ops/service_loacator.dart';
 
