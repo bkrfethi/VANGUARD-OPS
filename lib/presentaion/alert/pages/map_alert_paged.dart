@@ -17,28 +17,27 @@ class MapAlertPage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: BlocBuilder<AlertCubit, AlertState>(
         builder: (context, state) {
-          // Coordonnées par défaut (Kolkata comme sur ton screen)
           LatLng incidentPos = const LatLng(22.5726, 88.3639);
-          
+
           if (state is AlertSuccess) {
             incidentPos = LatLng(state.alert.latitude, state.alert.longitude);
           }
 
           return Stack(
             children: [
-              // 1. FOND : Carte ou Placeholder Windows
+              // 1. IMPROVED MAP BACKGROUND
               _buildMapBackground(incidentPos),
 
-              // 2. OVERLAY GRADIENT (Assombrit le haut et le bas)
+              // 2. CINEMATIC OVERLAYS
               _buildGradientOverlay(),
 
-              // 3. EN-TÊTE (Localisation et Logo)
+              // 3. MODERN HEADER
               _buildHeader(),
 
-              // 4. BOUTONS D'ÉTAT (Location / Live Footage)
+              // 4. BEAUTIFIED STATUS AREA (Glassmorphism)
               _buildActionStatusArea(),
 
-              // 5. ZONE DE CONTRÔLE (Bouton Annuler + Timer)
+              // 5. CONTROL AREA
               _buildControlArea(context),
             ],
           );
@@ -47,182 +46,217 @@ class MapAlertPage extends StatelessWidget {
     );
   }
 
-  // Header avec Date et Nom de l'App
+  Widget _buildMapBackground(LatLng pos) {
+    return FlutterMap(
+      options: MapOptions(
+        initialCenter: pos,
+        initialZoom: 15,
+        minZoom: 3,
+        maxZoom: 18,
+        // ENABLE ZOOM & PAN HERE
+        interactionOptions: const InteractionOptions(
+          flags: InteractiveFlag.all, 
+        ),
+      ),
+      children: [
+        TileLayer(
+          urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+          subdomains: const ['a', 'b', 'c'],
+          // IMPROVED DARK FILTER (Tighter contrast)
+          tileBuilder: (context, tileWidget, tile) {
+            return ColorFiltered(
+              colorFilter: const ColorFilter.matrix([
+                -0.9, 0, 0, 0, 255,
+                0, -0.9, 0, 0, 255,
+                0, 0, -0.9, 0, 255,
+                0, 0, 0, 1, 0,
+              ]),
+              child: tileWidget,
+            );
+          },
+        ),
+        MarkerLayer(
+          markers: [
+            Marker(
+              point: pos,
+              width: 120,
+              height: 120,
+              child: _buildPulsingMarker(),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPulsingMarker() {
+    return Stack(
+      alignment: Alignment.center,
+      children: [
+        // Pulsing Ring Effect
+        Container(
+          width: 40,
+          height: 40,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.red.withOpacity(0.2),
+            border: Border.all(color: Colors.redAccent, width: 2),
+          ),
+        ),
+        const Icon(Icons.location_on, color: Colors.redAccent, size: 45),
+      ],
+    );
+  }
+
   Widget _buildHeader() {
     return Positioned(
-      top: 60,
-      left: 25,
-      right: 25,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "Kolkata, India - 02/11/2024",
-                style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 13),
-              ),
-              Text(
-                "RDAPP",
-                style: TextStyle(color: Colors.white, fontSize: 28,  letterSpacing: 1.2),
-              ),
-            ],
+      top: 50,
+      left: 20,
+      right: 20,
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black.withOpacity(0.7), Colors.transparent],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          const CircleAvatar(
-            backgroundColor: Color(0xFF1A1A1A),
-            child: Icon(Icons.person, color: Colors.white),
-          )
-        ],
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Kolkata, India • LIVE SIGNAL",
+                  style: TextStyle(
+                    color: Colors.redAccent.withOpacity(0.8),
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5,
+                  ),
+                ),
+                const Text(
+                  "VANGUARD OPS",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.w900,
+                    letterSpacing: 2,
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                border: Border.all(color: Colors.white24),
+              ),
+              child: const CircleAvatar(
+                backgroundColor: Color(0xFF1A1A1A),
+                child: Icon(Icons.security, color: Colors.white, size: 20),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 
-  // Zone des boutons Location et Footage
   Widget _buildActionStatusArea() {
     return Positioned(
-      bottom: 160,
+      bottom: 180,
       left: 20,
       right: 20,
       child: Row(
         children: [
-          Expanded(child: _statusCard("Location", "Sharing Location...", Icons.location_on)),
+          Expanded(child: _statusCard("GPS", "ACTIVE", Icons.gps_fixed, Colors.greenAccent)),
           const SizedBox(width: 12),
-          Expanded(child: _statusCard("Live Footage", "Recording Video...", Icons.videocam)),
+          Expanded(child: _statusCard("VIDEO", "RECORDING", Icons.videocam, Colors.redAccent)),
         ],
       ),
     );
   }
 
-  // Widget de carte de statut (Style sombre)
-  Widget _statusCard(String title, String subtitle, IconData icon) {
+  Widget _statusCard(String title, String status, IconData icon, Color accent) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFF121212).withOpacity(0.9),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: Colors.white.withOpacity(0.05)),
+        // Glassmorphism effect
+        color: const Color(0xFF1E1E1E).withOpacity(0.85),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: Colors.white10),
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.4), blurRadius: 10, offset: const Offset(0, 5))
+        ],
       ),
-      child: Row(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Colors.redAccent, size: 22),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(title, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
-                Text(subtitle, style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 11)),
-              ],
-            ),
-          ),
+          Icon(icon, color: accent, size: 20),
+          const SizedBox(height: 10),
+          Text(title, style: const TextStyle(color: Colors.white54, fontSize: 10, fontWeight: FontWeight.bold)),
+          Text(status, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
         ],
       ),
     );
   }
 
-  // Bouton d'annulation et Timer
   Widget _buildControlArea(BuildContext context) {
     return Align(
       alignment: Alignment.bottomCenter,
-      child: Padding(
-        padding: const  EdgeInsets.all(4),
+      child: Container(
+        height: 200,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [Colors.transparent, Colors.black.withOpacity(0.9)],
+          ),
+        ),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
               onTap: () => Navigator.pop(context),
               child: Container(
-                height: 80, width: 80,
+                height: 70,
+                width: 70,
                 decoration: BoxDecoration(
                   color: Colors.red,
                   shape: BoxShape.circle,
-                  boxShadow: [BoxShadow(color: Colors.red.withOpacity(0.3), blurRadius: 20, spreadRadius: 5)],
+                  boxShadow: [
+                    BoxShadow(color: Colors.red.withOpacity(0.5), blurRadius: 25, spreadRadius: 2)
+                  ],
                 ),
-                child: const Icon(Icons.close, color: Colors.white, size: 40),
+                child: const Icon(Icons.power_settings_new, color: Colors.white, size: 35),
               ),
             ),
             const SizedBox(height: 15),
-            const Text("Cancel Alert", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 5),
-            const Text("Emergency Alert triggered in 3s...", style: TextStyle(color: Colors.redAccent, fontSize: 13)),
+            const Text("HOLD TO CANCEL", style: TextStyle(color: Colors.white70, fontSize: 12, letterSpacing: 2)),
           ],
         ),
       ),
     );
   }
 
-  // Gestion de la carte vs Windows
-Widget _buildMapBackground(LatLng pos) { // Ce LatLng sera désormais celui de latlong2
-  return FlutterMap(
-    options: MapOptions(
-      initialCenter: pos, // Plus besoin de recréer LatLng si 'pos' est déjà du bon type
-      initialZoom: 15,
-    ),
-    children: [
-      TileLayer(
-        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-        subdomains: const ['a', 'b', 'c'],
-        tileBuilder: (context, tileWidget, tile) {
-           return ColorFiltered(
-             colorFilter: const ColorFilter.matrix([
-               -1,  0,  0, 0, 255,
-                0, -1,  0, 0, 255,
-                0,  0, -1, 0, 255,
-                0,  0,  0, 1,   0,
-             ]), 
-             child: tileWidget,
-           );
-        },
-      ),
-      MarkerLayer(
-        markers: [
-          Marker(
-            point: pos,
-            width: 80,
-            height: 80,
-            child: const Icon(Icons.location_on, color: Colors.red, size: 40),
-          ),
-        ],
-      ),
-    ],
-  );
-}
-  // Widget de remplacement commun
-  Widget _buildPlaceholder(String message) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      color: const Color(0xFF0A0A0A),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.map_outlined, color: Colors.white.withOpacity(0.1), size: 100),
-            const SizedBox(height: 10),
-            Text(
-              message,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.3),
-                fontSize: 10,
-                letterSpacing: 1.5,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
   Widget _buildGradientOverlay() {
-    return Container(
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-          colors: [Colors.black.withOpacity(0.8), Colors.transparent, Colors.transparent, Colors.black],
-          stops: const [0.0, 0.3, 0.7, 1.0],
+    return IgnorePointer(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Colors.black.withOpacity(0.6),
+              Colors.transparent,
+              Colors.transparent,
+              Colors.black.withOpacity(0.8)
+            ],
+            stops: const [0.0, 0.2, 0.7, 1.0],
+          ),
         ),
       ),
     );
