@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +17,8 @@ class MapAlertPage extends StatelessWidget {
       backgroundColor: Colors.black,
       body: BlocBuilder<AlertCubit, AlertState>(
         builder: (context, state) {
-          LatLng incidentPos = const LatLng(22.5726, 88.3639); // Default
+          // Coordonnées par défaut (Kolkata comme sur ton screen)
+          LatLng incidentPos = const LatLng(22.5726, 88.3639);
           
           if (state is AlertSuccess) {
             incidentPos = LatLng(state.alert.latitude, state.alert.longitude);
@@ -26,85 +26,20 @@ class MapAlertPage extends StatelessWidget {
 
           return Stack(
             children: [
-              // 1. LA CARTE (AVEC CHECK PLATEFORME)
-              _buildMap(incidentPos),
+              // 1. FOND : Carte ou Placeholder Windows
+              _buildMapBackground(incidentPos),
 
-              // 2. OVERLAY GRADIENT (Pour le look premium)
-              Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withOpacity(0.8),
-                      Colors.transparent,
-                      Colors.transparent,
-                      Colors.black.withOpacity(0.9),
-                    ],
-                  ),
-                ),
-              ),
+              // 2. OVERLAY GRADIENT (Assombrit le haut et le bas)
+              _buildGradientOverlay(),
 
-              // 3. EN-TÊTE (RDAPP)
-              Positioned(
-                top: 50,
-                left: 20,
-                right: 20,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("Kolkata, India - 02/11/2024", style: TextStyle(color: Colors.grey, fontSize: 12)),
-                        Text("RDAPP", style: TextStyle(color: Colors.white, fontSize: 24, fontWeight: FontWeight.bold)),
-                      ],
-                    ),
-                    const Icon(Icons.person_pin, color: Colors.white, size: 40),
-                  ],
-                ),
-              ),
+              // 3. EN-TÊTE (Localisation et Logo)
+              _buildHeader(),
 
-              // 4. LES BOUTONS D'ACTION (Location / Live Footage)
-              Positioned(
-                bottom: 180,
-                left: 20,
-                right: 20,
-                child: Row(
-                  children: [
-                    Expanded(child: _buildStatusTile("Location", "Sharing Location...", Icons.location_on)),
-                    const SizedBox(width: 10),
-                    Expanded(child: _buildStatusTile("Live Footage", "Recording Video...", Icons.videocam)),
-                  ],
-                ),
-              ),
+              // 4. BOUTONS D'ÉTAT (Location / Live Footage)
+              _buildActionStatusArea(),
 
-              // 5. BOUTON CANCEL
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      GestureDetector(
-                        onTap: () {
-                          context.read<AlertCubit>().cancelAlert();
-                          Navigator.pop(context);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(20),
-                          decoration: const BoxDecoration(color: Colors.red, shape: BoxShape.circle),
-                          child: const Icon(Icons.close, color: Colors.white, size: 35),
-                        ),
-                      ),
-                      const SizedBox(height: 10),
-                      const Text("Cancel Alert", style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                      const Text("Emergency Alert triggered in 3s...", style: TextStyle(color: Colors.red, fontSize: 12)),
-                    ],
-                  ),
-                ),
-              ),
+              // 5. ZONE DE CONTRÔLE (Bouton Annuler + Timer)
+              _buildControlArea(context),
             ],
           );
         },
@@ -112,62 +47,148 @@ class MapAlertPage extends StatelessWidget {
     );
   }
 
-  // GESTION DU SUPPORT PLATEFORME POUR LA CARTE
-  Widget _buildMap(LatLng pos) {
+  // Header avec Date et Nom de l'App
+  Widget _buildHeader() {
+    return Positioned(
+      top: 60,
+      left: 25,
+      right: 25,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Kolkata, India - 02/11/2024",
+                style: TextStyle(color: Colors.white.withOpacity(0.6), fontSize: 13),
+              ),
+              Text(
+                "RDAPP",
+                style: TextStyle(color: Colors.white, fontSize: 28,  letterSpacing: 1.2),
+              ),
+            ],
+          ),
+          const CircleAvatar(
+            backgroundColor: Color(0xFF1A1A1A),
+            child: Icon(Icons.person, color: Colors.white),
+          )
+        ],
+      ),
+    );
+  }
+
+  // Zone des boutons Location et Footage
+  Widget _buildActionStatusArea() {
+    return Positioned(
+      bottom: 160,
+      left: 20,
+      right: 20,
+      child: Row(
+        children: [
+          Expanded(child: _statusCard("Location", "Sharing Location...", Icons.location_on)),
+          const SizedBox(width: 12),
+          Expanded(child: _statusCard("Live Footage", "Recording Video...", Icons.videocam)),
+        ],
+      ),
+    );
+  }
+
+  // Widget de carte de statut (Style sombre)
+  Widget _statusCard(String title, String subtitle, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+      decoration: BoxDecoration(
+        color: const Color(0xFF121212).withOpacity(0.9),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: Colors.white.withOpacity(0.05)),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.redAccent, size: 22),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(title, style: const TextStyle(color: Colors.white, fontSize: 14, fontWeight: FontWeight.bold)),
+                Text(subtitle, style: TextStyle(color: Colors.white.withOpacity(0.5), fontSize: 11)),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  // Bouton d'annulation et Timer
+  Widget _buildControlArea(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomCenter,
+      child: Padding(
+        padding: const  EdgeInsets.all(4),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Container(
+                height: 80, width: 80,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  shape: BoxShape.circle,
+                  boxShadow: [BoxShadow(color: Colors.red.withOpacity(0.3), blurRadius: 20, spreadRadius: 5)],
+                ),
+                child: const Icon(Icons.close, color: Colors.white, size: 40),
+              ),
+            ),
+            const SizedBox(height: 15),
+            const Text("Cancel Alert", style: TextStyle(color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold)),
+            const SizedBox(height: 5),
+            const Text("Emergency Alert triggered in 3s...", style: TextStyle(color: Colors.redAccent, fontSize: 13)),
+          ],
+        ),
+      ),
+    );
+  }
+
+  // Gestion de la carte vs Windows
+  Widget _buildMapBackground(LatLng pos) {
     if (!kIsWeb && Platform.isWindows) {
       return Container(
-        color: const Color(0xFF121212),
-        child: const Center(
+        width: double.infinity,
+        height: double.infinity,
+        color: const Color(0xFF0A0A0A),
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.map_outlined, color: Colors.grey, size: 50),
-              SizedBox(height: 10),
-              Text("Map preview not available on Windows", style: TextStyle(color: Colors.grey)),
-              Text("(Simulating GPS Signal...)", style: TextStyle(color: Colors.red, fontSize: 10)),
+              Icon(Icons.map_outlined, color: Colors.white.withOpacity(0.1), size: 100),
+              const SizedBox(height: 10),
+              Text("MAP PREVIEW NOT AVAILABLE ON WINDOWS", style: TextStyle(color: Colors.white.withOpacity(0.3), fontSize: 10, letterSpacing: 1.5)),
             ],
           ),
         ),
       );
     }
-
     return GoogleMap(
       initialCameraPosition: CameraPosition(target: pos, zoom: 16),
-      mapType: MapType.normal,
-      myLocationButtonEnabled: false,
+      mapType: MapType.normal, 
       zoomControlsEnabled: false,
-      markers: {
-        Marker(
-          markerId: const MarkerId('me'),
-          position: pos,
-          icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-        ),
-      },
+      markers: { Marker(markerId: const MarkerId('sos'), position: pos) },
     );
   }
 
-  Widget _buildStatusTile(String title, String sub, IconData icon) {
+  Widget _buildGradientOverlay() {
     return Container(
-      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        color: const Color(0xFF1A1A1A),
-        borderRadius: BorderRadius.circular(15),
-        border: Border.all(color: Colors.white10),
-      ),
-      child: Row(
-        children: [
-          Icon(icon, color: Colors.red, size: 20),
-          const SizedBox(width: 10),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(title, style: const TextStyle(color: Colors.white, fontSize: 12, fontWeight: FontWeight.bold)),
-                Text(sub, style: const TextStyle(color: Colors.grey, fontSize: 10), overflow: TextOverflow.ellipsis),
-              ],
-            ),
-          ),
-        ],
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.black.withOpacity(0.8), Colors.transparent, Colors.transparent, Colors.black],
+          stops: const [0.0, 0.3, 0.7, 1.0],
+        ),
       ),
     );
   }
