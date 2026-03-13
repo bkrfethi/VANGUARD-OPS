@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
+import 'package:vanguard_ops/presentaion/AuthWrapper.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart' show AlertCubit;
 import 'package:vanguard_ops/presentaion/auth/bloc/signin_cubit.dart';
 import 'package:vanguard_ops/presentaion/contact/bloc/contacts_bloc.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.dark, 
         ),
-        home: MainWrapper(),
+        home: AuthWrapper(),
       ),
     );
   }

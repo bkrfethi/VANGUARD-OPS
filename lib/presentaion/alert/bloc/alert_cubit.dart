@@ -20,24 +20,29 @@ class AlertCubit extends Cubit<AlertState> {
   Future<void> triggerEmergency(String description) async {
     emit(AlertLoading());
 
-    try {
-      // 1. Récupérer la position GPS immédiatement
-      Position position = await sl<LocationService>().getCurrentPosition();
-      
-      // 2. Préparer l'entité (on l'enverra après le timer)
-      _activeAlert = AlertEntity(
-        userId: sl<SupabaseClient>().auth.currentUser!.id,
-        latitude: position.latitude,
-        longitude: position.longitude,
-        description: description,
-        createdAt: DateTime.now(),
-      );
-
-      // 3. Lancer le compte à rebours
-      _startTimer();
-    } catch (e) {
-      emit(AlertError("GPS non disponible : $e"));
+try {
+    // 1. Vérifier si l'utilisateur est connecté
+    final user = sl<SupabaseClient>().auth.currentUser;
+    if (user == null) {
+      emit(AlertError("Erreur : Utilisateur non authentifié. Veuillez vous reconnecter."));
+      return;
     }
+
+    // 2. Récupérer la position GPS
+    final position = await sl<LocationService>().getCurrentPosition();
+    
+    _activeAlert = AlertEntity(
+      userId: user.id, // Plus de "!" ici, on a vérifié au-dessus
+      latitude: position.latitude,
+      longitude: position.longitude,
+      description: description,
+      createdAt: DateTime.now(),
+    );
+    
+    _startTimer();
+  } catch (e) {
+    emit(AlertError("GPS non disponible : $e"));
+  }
   }
 
   void _startTimer() {

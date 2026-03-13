@@ -4,7 +4,6 @@ import 'package:vanguard_ops/common/bloc/NavigationCubit.dart';
 import 'package:vanguard_ops/common/wigets/AppBottomNavbar.dart';
 import 'package:vanguard_ops/presentaion/alert/pages/report_incident_page.dart' show ReportIncidentPage;
 import 'package:vanguard_ops/presentaion/contact/pages/contact.dart';
-import 'package:vanguard_ops/presentaion/home/pages/Home.dart';
 import 'package:vanguard_ops/presentaion/setting/pages/settinmg.dart';
 
 class MainWrapper extends StatelessWidget {
