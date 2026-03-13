@@ -7,17 +7,18 @@ import '../services/alert_supabase_service.dart';
 class AlertRepositoryImpl implements AlertRepository {
 
   @override
-  Future<Either<String, AlertEntity>> sendAlert(AlertEntity alert) async {
-    try {
-      final model = AlertModel.fromEntity(alert);
-      
-      final data = await sl<AlertService>().sendAlert(model.toJson());
-      
-      return Right(AlertModel.fromJson(data));
-    } catch (e) {
-      return Left("Erreur technique : Impossible d'envoyer l'alerte.");
-    }
+@override
+Future<Either> sendAlert(AlertEntity params) async {
+  try {
+    final model = AlertModel.fromEntity(params);
+    final data = await sl<AlertService>().sendAlert(model.toJson());
+    return Right(AlertModel.fromJson(data));
+  } catch (e) {
+    // ICI : Affiche l'erreur dans ton terminal (VS Code / Android Studio)
+    print("DEBUG SUPABASE ERROR: $e"); 
+    return const Left("Erreur technique : Impossible d'envoyer l'alerte.");
   }
+}
 
   @override
   Future<Either<String, void>> cancelAlert(String alertId) async {

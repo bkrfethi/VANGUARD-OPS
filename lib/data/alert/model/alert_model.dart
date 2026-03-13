@@ -26,21 +26,22 @@ class AlertModel extends AlertEntity {
   factory AlertModel.fromJson(Map<String, dynamic> json) {
     return AlertModel(
       id: json['id']?.toString(),
-      userId: json['user_id'] ?? '',
-      latitude: (json['lat'] as num).toDouble(),
-      longitude: (json['lng'] as num).toDouble(),
+      userId: json['creator_id'] ?? '', 
+      latitude: (json['latitude'] as num).toDouble(),
+      longitude: (json['longitude'] as num).toDouble(),
       description: json['description'] ?? '',
-      status: json['status'] ?? 'active',
+      status: json['status'] ?? 'open',
       createdAt: DateTime.parse(json['created_at']),
     );
   }
 
   Map<String, dynamic> toJson() => {
-    'user_id': userId,
-    'lat': latitude,
-    'lng': longitude,
+    'creator_id': userId,   
+    'title': 'EMERGENCY ALERT', 
+    'latitude': latitude,      
+    'longitude': longitude,    
     'description': description,
-    'status': status,
+'status': 'open',
     'created_at': createdAt.toIso8601String(),
   };
 }
