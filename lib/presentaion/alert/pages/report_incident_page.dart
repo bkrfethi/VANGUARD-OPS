@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vanguard_ops/core/config/theme/app_colors.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_state.dart';
+import 'package:vanguard_ops/presentaion/alert/pages/map_alert_paged.dart';
 
 class ReportIncidentPage extends StatelessWidget {
   const ReportIncidentPage({super.key});
@@ -81,8 +82,10 @@ class ReportIncidentPage extends StatelessWidget {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text("Alert Sent Successfully!"), backgroundColor: Colors.green),
                   );
-                  // TODO: Navigator.pushNamed(context, '/map_page');
-                }
+                    Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const MapAlertPage()),
+      );                }
                 if (state is AlertError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(state.message), backgroundColor: Colors.red),
