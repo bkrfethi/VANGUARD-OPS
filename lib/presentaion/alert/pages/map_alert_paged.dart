@@ -2,10 +2,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_cubit.dart';
 import 'package:vanguard_ops/presentaion/alert/bloc/alert_state.dart';
-
+import 'package:latlong2/latlong.dart'; 
+import 'package:flutter_map/flutter_map.dart';
 
 
 class MapAlertPage extends StatelessWidget {
@@ -154,33 +154,41 @@ class MapAlertPage extends StatelessWidget {
   }
 
   // Gestion de la carte vs Windows
-  Widget _buildMapBackground(LatLng pos) {
-    // 1. Gestion Windows (Incompatibilité plugin)
-    if (!kIsWeb && Platform.isWindows) {
-      return _buildPlaceholder("MAP PREVIEW NOT AVAILABLE ON WINDOWS");
-    }
-
-    // 2. Gestion Web / Android / iOS
-    try {
-      return GoogleMap(
-        initialCameraPosition: CameraPosition(target: pos, zoom: 16),
-        mapType: MapType.normal,
-        zoomControlsEnabled: false,
-        myLocationButtonEnabled: false,
-        markers: {
-          Marker(
-            markerId: const MarkerId('sos'),
-            position: pos,
-            icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
-          )
+Widget _buildMapBackground(LatLng pos) { // Ce LatLng sera désormais celui de latlong2
+  return FlutterMap(
+    options: MapOptions(
+      initialCenter: pos, // Plus besoin de recréer LatLng si 'pos' est déjà du bon type
+      initialZoom: 15,
+    ),
+    children: [
+      TileLayer(
+        urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        subdomains: const ['a', 'b', 'c'],
+        tileBuilder: (context, tileWidget, tile) {
+           return ColorFiltered(
+             colorFilter: const ColorFilter.matrix([
+               -1,  0,  0, 0, 255,
+                0, -1,  0, 0, 255,
+                0,  0, -1, 0, 255,
+                0,  0,  0, 1,   0,
+             ]), 
+             child: tileWidget,
+           );
         },
-      );
-    } catch (e) {
-      // Si le script Web n'est pas encore prêt, on affiche un chargement propre
-      return _buildPlaceholder("INITIALIZING TACTICAL MAP...");
-    }
-  }
-
+      ),
+      MarkerLayer(
+        markers: [
+          Marker(
+            point: pos,
+            width: 80,
+            height: 80,
+            child: const Icon(Icons.location_on, color: Colors.red, size: 40),
+          ),
+        ],
+      ),
+    ],
+  );
+}
   // Widget de remplacement commun
   Widget _buildPlaceholder(String message) {
     return Container(
