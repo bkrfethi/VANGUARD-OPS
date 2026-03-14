@@ -1,20 +1,36 @@
 import 'package:vanguard_ops/domain/alert/entities/alert_entity.dart';
 
-abstract class AlertState {}
+abstract class AlertState {
+  const AlertState();
+}
 
-class AlertInitial extends AlertState {}
-class AlertLoading extends AlertState {}
+class AlertInitial extends AlertState {
+  const AlertInitial();
+}
+
+class AlertLoading extends AlertState {
+  const AlertLoading();
+}
+
 class AlertTimerInProgress extends AlertState {
   final int secondsLeft;
-  AlertTimerInProgress(this.secondsLeft);
+  const AlertTimerInProgress(this.secondsLeft);
 }
-class AlertSending extends AlertState {}
+
+class AlertSending extends AlertState {
+  const AlertSending();
+}
+
 class AlertSuccess extends AlertState {
   final AlertEntity alert;
-  AlertSuccess(this.alert);
+  const AlertSuccess(this.alert);
 }
-class AlertCancelling extends AlertState {}
+
+class AlertCancelling extends AlertState {
+  const AlertCancelling();
+}
+
 class AlertError extends AlertState {
   final String message;
-  AlertError(this.message);
+  const AlertError(this.message);
 }
