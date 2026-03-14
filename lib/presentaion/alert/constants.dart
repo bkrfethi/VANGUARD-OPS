@@ -1,10 +1,8 @@
-/// Constantes de style pour le module Alert
-/// Thème : Military Grade Dark Mode
+
 library alert_constants;
 
 import 'package:flutter/material.dart';
 
-/// Palettes de couleurs
 class AlertColors {
   // Couleurs principales
   static const Color black = Color(0xFF000000);
@@ -12,18 +10,15 @@ class AlertColors {
   static const Color darkSurfaceAlt = Color(0xFF1E1E1E);
   static const Color darkInput = Color(0xFF262626);
 
-  // Couleurs d'accent
   static const Color redAccent = Color(0xFFDC143C);
   static const Color redPrimary = Colors.red;
   static const Color greenAccent = Color(0xFF00FF00);
 
-  // Couleurs texte
   static const Color textPrimary = Colors.white;
   static const Color textSecondary = Color(0xFF999999);
   static const Color textTertiary = Color(0xFF666666);
 }
 
-/// Constantes de spacing et sizes
 class AlertDimensions {
   // Padding/Margin standards
   static const double paddingXS = 8.0;
@@ -54,7 +49,7 @@ class AlertDimensions {
   static const double cancelButtonSize = 70.0;
 }
 
-/// Constantes de typographie
+
 class AlertTypography {
   // Weights
   static const FontWeight weightLight = FontWeight.w300;
@@ -74,7 +69,6 @@ class AlertTypography {
   static const double sizeTitle = 32.0;
 }
 
-/// Constantes d'animation
 class AlertAnimations {
   static const Duration fast = Duration(milliseconds: 200);
   static const Duration normal = Duration(milliseconds: 300);
@@ -82,7 +76,6 @@ class AlertAnimations {
   static const Duration verySlow = Duration(seconds: 1);
 }
 
-/// Constantes de shadow/elevation
 class AlertShadows {
   static final List<BoxShadow> subtle = [
     BoxShadow(
@@ -109,7 +102,6 @@ class AlertShadows {
   ];
 }
 
-/// Constantes de border
 class AlertBorders {
   static final Border subtle = Border.all(
     color: Colors.white.withOpacity(0.05),
@@ -127,15 +119,13 @@ class AlertBorders {
   );
 }
 
-/// Constantes de durée du compte à rebours
 class AlertTimerConstants {
   static const int countdownDuration = 3; // secondes
   static const int maxCountdownDuration = 60; // limite max du timer
 }
 
-/// Constantes de textes
+/// Constantes 
 class AlertTexts {
-  // Labels
   static const String labelGps = 'GPS';
   static const String labelVideo = 'VIDEO';
   static const String labelLocation = 'Location';
@@ -143,20 +133,18 @@ class AlertTexts {
   static const String labelFootage = 'Footage';
   static const String labelPicture = 'Picture';
 
-  // Statuts
+
   static const String statusActive = 'ACTIVE';
   static const String statusRecording = 'RECORDING';
   static const String statusLiveSignal = 'LIVE SIGNAL';
   static const String statusVanguardOps = 'VANGUARD OPS';
 
-  // Actions
   static const String actionReport = 'Report Incident';
   static const String actionCancel = 'CANCEL ALERT';
   static const String actionHoldToCancel = 'HOLD TO CANCEL';
   static const String actionBack = 'Back';
   static const String actionEdit = 'Edit';
 
-  // Messages
   static const String msgDescribeBriefly = 'Give a quick brief.';
   static const String msgRecordLiveVideo = 'Record Live video';
   static const String msgUploadLivePhoto = 'Upload Live photo';

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Carte pour les actions médias (vidéo, photo)
 class MediaCardWidget extends StatelessWidget {
   final String title;
   final String description;
@@ -31,14 +30,12 @@ class MediaCardWidget extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Icône
             Icon(
               icon,
               color: AlertColors.textSecondary,
               size: AlertDimensions.iconL,
             ),
             const SizedBox(height: AlertDimensions.paddingM),
-            // Titre
             Text(
               title,
               style: const TextStyle(
@@ -48,7 +45,6 @@ class MediaCardWidget extends StatelessWidget {
               ),
             ),
             const SizedBox(height: AlertDimensions.paddingS),
-            // Description
             Text(
               description,
               style: const TextStyle(

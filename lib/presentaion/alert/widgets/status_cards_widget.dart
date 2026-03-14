@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Cartes de statut avec glassmorphisme
-/// Affiche le statut GPS, Video Recording, etc.
+
 class StatusCardsWidget extends StatelessWidget {
   final List<_StatusCardData> cards;
 
@@ -33,7 +32,6 @@ class StatusCardsWidget extends StatelessWidget {
     );
   }
 
-  /// Crée un widget de carte avec statut simple
   static StatusCardsWidget gpsAndVideo() {
     return StatusCardsWidget(
       cards: [
@@ -54,7 +52,6 @@ class StatusCardsWidget extends StatelessWidget {
   }
 }
 
-/// Classe pour stocker les données d'une carte de statut
 class _StatusCardData {
   final String title;
   final String status;
@@ -69,7 +66,6 @@ class _StatusCardData {
   });
 }
 
-/// Widget d'une carte individual de statut
 class _StatusCard extends StatelessWidget {
   final _StatusCardData data;
 
@@ -80,7 +76,6 @@ class _StatusCard extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(AlertDimensions.paddingM),
       decoration: BoxDecoration(
-        // Effet glassmorphisme
         color: AlertColors.darkSurfaceAlt.withOpacity(0.85),
         borderRadius: BorderRadius.circular(AlertDimensions.radiusL),
         border: AlertBorders.medium,
@@ -89,14 +84,12 @@ class _StatusCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Icône avec accent color
           Icon(
             data.icon,
             color: data.accentColor,
             size: AlertDimensions.iconS,
           ),
           const SizedBox(height: AlertDimensions.paddingM),
-          // Titre
           Text(
             data.title,
             style: TextStyle(
@@ -107,7 +100,6 @@ class _StatusCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: AlertDimensions.paddingS),
-          // Statut
           Text(
             data.status,
             style: const TextStyle(

@@ -3,8 +3,6 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Widget de carte pessimiste avec flutter_map
-/// Style : Military Grade Dark Mode avec CartoDB Dark Matter
 class MapWidget extends StatelessWidget {
   final LatLng position;
   final bool isInteractive;
@@ -28,12 +26,10 @@ class MapWidget extends StatelessWidget {
         ),
       ),
       children: [
-        // Couche de tuiles CartoDB Dark Matter
         TileLayer(
           urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
           subdomains: const ['a', 'b', 'c'],
           userAgentPackageName: 'com.vanguard.ops',
-          // Filtre de couleur personnalisé pour un look encore plus sombre
           tileBuilder: (context, tileWidget, tile) {
             return ColorFiltered(
               colorFilter: const ColorFilter.matrix([
@@ -46,7 +42,6 @@ class MapWidget extends StatelessWidget {
             );
           },
         ),
-        // Couche de marqueurs avec pulsation
         MarkerLayer(
           markers: [
             Marker(
@@ -61,12 +56,10 @@ class MapWidget extends StatelessWidget {
     );
   }
 
-  /// Construit le marqueur avec effet de pulsation
   static Widget _buildPulsingMarker() {
     return Stack(
       alignment: Alignment.center,
       children: [
-        // Anneau extérieur pulsant
         Container(
           width: 60,
           height: 60,
@@ -86,7 +79,6 @@ class MapWidget extends StatelessWidget {
             ],
           ),
         ),
-        // Icône de localisation au centre
         const Padding(
           padding: EdgeInsets.only(bottom: 8),
           child: Icon(

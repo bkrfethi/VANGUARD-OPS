@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Overlay de dégradé cinématique pour les fonds de carte
-/// Crée un effet de couche vidéo militaire
+
 class CinematicGradientOverlay extends StatelessWidget {
   final bool ignorePointer;
 

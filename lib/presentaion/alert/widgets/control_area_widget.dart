@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Zone de contrôle avec le bouton d'annulation de l'alerte
-/// Style : Military Grade Dark Mode avec gradient et ombre
+
 class ControlAreaWidget extends StatelessWidget {
   final VoidCallback onCancelTap;
   final bool isEnabled;

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Champ de description pour les rapports d'incident
 class DescriptionFieldWidget extends StatefulWidget {
   final TextEditingController? controller;
   final String hintText;
@@ -48,7 +47,6 @@ class _DescriptionFieldWidgetState extends State<DescriptionFieldWidget> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header avec icône
           const Row(
             children: [
               Icon(Icons.info_outline, color: AlertColors.textSecondary, size: AlertDimensions.iconXS),
@@ -64,7 +62,6 @@ class _DescriptionFieldWidgetState extends State<DescriptionFieldWidget> {
             ],
           ),
           const SizedBox(height: AlertDimensions.paddingS),
-          // Sous-texte
           Text(
             'Give a quick brief.',
             style: TextStyle(
@@ -73,7 +70,6 @@ class _DescriptionFieldWidgetState extends State<DescriptionFieldWidget> {
             ),
           ),
           const SizedBox(height: AlertDimensions.paddingM),
-          // Champ de texte
           TextField(
             controller: _controller,
             onChanged: widget.onChanged,
@@ -101,7 +97,6 @@ class _DescriptionFieldWidgetState extends State<DescriptionFieldWidget> {
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AlertDimensions.radiusS),
-                //borderSide: AlertBorders.subtle,
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(AlertDimensions.radiusS),

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Carte d'information réutilisable
-/// Affiche un titre, sous-titre et icône
 class InfoCardWidget extends StatelessWidget {
   final String title;
   final String subtitle;
@@ -31,19 +29,16 @@ class InfoCardWidget extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Icône
           Icon(
             icon,
             color: AlertColors.textSecondary,
             size: AlertDimensions.iconS,
           ),
           const SizedBox(width: AlertDimensions.paddingM),
-          // Contenu
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // Titre
                 Text(
                   title,
                   style: const TextStyle(
@@ -53,7 +48,6 @@ class InfoCardWidget extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(height: AlertDimensions.paddingS),
-                // Sous-titre
                 Text(
                   subtitle,
                   style: const TextStyle(
@@ -66,7 +60,6 @@ class InfoCardWidget extends StatelessWidget {
               ],
             ),
           ),
-          // Icône d'édition
           if (isEditable)
             GestureDetector(
               onTap: onEditTap,

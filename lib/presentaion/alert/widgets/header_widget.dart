@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vanguard_ops/presentaion/alert/constants.dart';
 
-/// Header widget pour les pages d'alerte
-/// Style : Military Grade Dark Mode avec gradients et effets de flou
 class HeaderWidget extends StatelessWidget {
   final String location;
   final String status;
@@ -42,11 +40,9 @@ class HeaderWidget extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Section gauche : Location & Status
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Label de statut avec underscore
                   Text(
                     status.toUpperCase(),
                     style: TextStyle(
@@ -57,7 +53,6 @@ class HeaderWidget extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: AlertDimensions.paddingS),
-                  // Titre principal
                   Text(
                     location,
                     style: const TextStyle(
@@ -69,7 +64,6 @@ class HeaderWidget extends StatelessWidget {
                   ),
                 ],
               ),
-              // Section droite : Security icon
               GestureDetector(
                 onTap: onSecurityIconTap,
                 child: Container(
