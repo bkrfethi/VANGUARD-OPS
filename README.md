@@ -71,8 +71,6 @@ class AlertCubit extends Cubit<AlertState> {
       const Duration(seconds: 1),
       (count) => _countdownDuration - count - 1,
     ).takeWhile((tick) => tick >= 0).listen((remaining) {
-      // ✅ Robuste : gère automatiquement la souscription
-      // ✅ Réactif : émis un état tous les 1 secondes
       if (!isClosed) emit(AlertTimerInProgress(remaining));
     });
   }
