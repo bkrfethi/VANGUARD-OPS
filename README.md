@@ -424,9 +424,3 @@ lib/presentaion/alert/
 - [ ] **Deep Linking** : Share alerts
 
 ---
-
-
-
-
-
-
