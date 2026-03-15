@@ -10,21 +10,7 @@
 
 ---
 
-## 📋 Table of Contents
 
-1. [🎯 Overview](#-overview)
-2. [🏗️ Technical Architecture](#️-technical-architecture)
-3. [⚡ Alert Module - Heart of the Project](#-alert-module---heart-of-the-project)
-4. [🎨 Design System "Tactical Dark"](#-design-system-tactical-dark)
-5. [📦 Project Structure](#-project-structure)
-6. [🚀 Installation Guide "Zero Error"](#-installation-guide-zero-error)
-7. [🔧 Key Dependencies](#-key-dependencies)
-8. [📱 Main Features](#-main-features)
-9. [🛠️ Development & Testing](#️-development--testing)
-10. [⚠️ Maps Migration: Lessons Learned](#️-maps-migration-lessons-learned)
-11. [👨‍💻 Code Conventions](#-code-conventions)
-
----
 
 ## 🎯 Overview
 
@@ -104,37 +90,10 @@ Presentation Layer (Cubits + UI)
 
 **google_maps_flutter** → **flutter_map** (Changement Critique)
 
-| Critère | google_maps | flutter_map | Verdict |
-|---------|-------------|----------|---------|
-| **Web Support** | ❌ Problématique | ✅ Natif | **flutter_map** gagne |
-| **Windows Support** | ❌ Non supporté | ✅ Supporté | **flutter_map** gagne |
-| **Propriétaire** | ❌ Google only | ✅ Open-source | **flutter_map** gagne |
-| **API Key Required** | ✅ Oui | ❌ Non (OSM) | **flutter_map** gagne |
-| **Bundle Size** | ⚠️ Lourd | ✅ Léger | **flutter_map** gagne |
-| **Licence** | ⚠️ Restrictions | ✅ FOSS | **flutter_map** gagne |
 
-#### 🐛 Errors Encountered
 
-```
-❌ TypeError: maps_api is undefined (Web)
-❌ PlatformException: Initialization of Maps failed (Windows)
-❌ Type incompatibility for web platform
-```
 
-**Implemented Solution**: 
-- ✅ `flutter_map: ^8.2.2` (Pure Dart fork, multi-platform)
-- ✅ `latlong2: ^0.9.1` (Coordinate management)
-- ✅ **CartoDB Dark Matter tiles** for military aesthetics
 
-#### 🗺️ Cartographic Configuration
-
-```dart
-// Map avec tiles CartoDB Dark Matter (Military Grade)
-TileLayer(
-  urlTemplate: 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
-  subdomains: const ['a', 'b', 'c'],
-  userAgentPackageName: 'com.vanguard.ops',
-)
 ```
 
 ---
@@ -362,54 +321,6 @@ cupertino_icons: ^1.0.8
 - Structured fields
 - Media upload to Supabase Storage
 - Validation + user feedback
-
----
-
-## 👨‍💻 Code Conventions
-
-### 1. Naming
-```dart
-final alertCubit = AlertCubit();
-void sendEmergencyAlert() {}
-const int COUNTDOWN_DURATION = 3;
-```
-
-### 2. DocStrings
-```dart
-/// Sends an SOS alert with GPS position and description.
-/// Launches a 3-second countdown before actual send.
-Future<void> triggerEmergency(String description) async {}
-```
-
-### 3. Error Handling with Dartz
-```dart
-result.fold(
-  (failure) => emit(AlertError(failure.message)),
-  (alert) => emit(AlertSuccess(alert)),
-);
-```
-
-### 4. States (Immutable)
-```dart
-abstract class AlertState extends Equatable {
-  const AlertState();
-}
-
-class AlertInitial extends AlertState {
-  const AlertInitial();
-  @override
-  List<Object?> get props => [];
-}
-```
-
-### 5. Organize by Feature
-```
-lib/presentaion/alert/
-├── bloc/       ← State management
-├── pages/      ← Full screens
-├── widgets/    ← Reusable components
-└── constants.dart
-```
 
 ---
 
