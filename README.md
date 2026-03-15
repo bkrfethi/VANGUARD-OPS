@@ -1,4 +1,4 @@
-<!-- # 🛡️ VANGUARD OPS - RDAPP
+<!-- <!-- # 🛡️ VANGUARD OPS - RDAPP
 ## *Tactical Security Response Application - Enterprise Edition*
 
 ![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
@@ -10,58 +10,58 @@
 
 ---
 
-## 📋 Table des Matières
+## 📋 Table of Contents
 
-1. [🎯 Vue d'Ensemble](#-vue-densemble)
-2. [🏗️ Architecture Technique](#️-architecture-technique)
-3. [⚡ Module Alert - Le Cœur du Projet](#-module-alert---le-cœur-du-projet)
+1. [🎯 Overview](#-overview)
+2. [🏗️ Technical Architecture](#️-technical-architecture)
+3. [⚡ Alert Module - Heart of the Project](#-alert-module---heart-of-the-project)
 4. [🎨 Design System "Tactical Dark"](#-design-system-tactical-dark)
-5. [📦 Structure du Projet](#-structure-du-projet)
-6. [🚀 Guide Installation "Zero Error"](#-guide-installation-zero-error)
-7. [🔧 Dépendances Clés](#-dépendances-clés)
-8. [📱 Fonctionnalités Principales](#-fonctionnalités-principales)
-9. [🛠️ Développement & Tests](#️-développement--tests)
-10. [⚠️ Migration Maps: Leçons Apprises](#️-migration-maps-leçons-apprises)
-11. [👨‍💻 Conventions de Code](#-conventions-de-code)
+5. [📦 Project Structure](#-project-structure)
+6. [🚀 Installation Guide "Zero Error"](#-installation-guide-zero-error)
+7. [🔧 Key Dependencies](#-key-dependencies)
+8. [📱 Main Features](#-main-features)
+9. [🛠️ Development & Testing](#️-development--testing)
+10. [⚠️ Maps Migration: Lessons Learned](#️-maps-migration-lessons-learned)
+11. [👨‍💻 Code Conventions](#-code-conventions)
 
 ---
 
-## 🎯 Vue d'Ensemble
+## 🎯 Overview
 
-**VANGUARD OPS** est une application de sécurité tactique **haut de gamme** conçue pour les équipes d'intervention d'urgence (Gendarmerie, Pompiers, Police). Elle permet une gestion d'alertes en temps réel avec géolocalisation instantanée, communication avec des contacts d'urgence et un système de monitoring centralisé.
+**VANGUARD OPS** is a **premium** tactical security application designed for emergency response teams (Police, Firefighters, Rescue Services). It enables real-time alert management with instant geolocation, emergency contact communication, and centralized monitoring system.
 
-### Caractéristiques Principales
-- ✅ **Alertes Tactiques** : Déploiement d'SOS avec countdown intelligent (3 secondes)
-- ✅ **Géolocalisation Précise** : Intégration flutter_map + latlong2 (OpenStreetMap)
-- ✅ **Authentification Enterprise** : Supabase Auth avec SSO
-- ✅ **Backend Temps Réel** : Supabase Realtime pour les alertes/contacts
-- ✅ **Design Militaire** : Interface "Tactical Dark" avec CartoDB Dark Matter
-- ✅ **Multi-Plateforme** : iOS, Android, Web, Windows, macOS, Linux
+### Key Features
+- ✅ **Tactical Alerts** : SOS deployment with intelligent countdown (3 seconds)
+- ✅ **Precise Geolocation** : flutter_map + latlong2 integration (OpenStreetMap)
+- ✅ **Enterprise Authentication** : Supabase Auth with SSO
+- ✅ **Real-Time Backend** : Supabase Realtime for alerts/contacts
+- ✅ **Military Design** : "Tactical Dark" interface with CartoDB Dark Matter
+- ✅ **Multi-Platform** : iOS, Android, Web, Windows, macOS, Linux
 
-### Public Cible
-👮 Agents des forces de l'ordre  
-🚒 Pompiers et équipes de secours  
-⚠️ Personnel de sécurité tactique  
-🏙️ Centres d'opération d'urgence (PSAP/SAMU)
+### Target Audience
+👮 Law Enforcement Agents  
+🚒 Firefighters & Rescue Teams  
+⚠️ Tactical Security Personnel  
+🏙️ Emergency Operations Centers (PSAP/SAMU)
 
 ---
 
-## 🏗️ Architecture Technique
+## 🏗️ Technical Architecture
 
-### 1️⃣ Pattern BLoC/Cubit - Gestion d'État Réactive
+### 1️⃣ BLoC/Cubit Pattern - Reactive State Management
 
-L'application utilise **flutter_bloc** pour une gestion d'état professionnelle et scalable.
+The application uses **flutter_bloc** for professional and scalable state management.
 
 ```dart
-// Hiérarchie des Cubits
-AlertCubit          → Gestion des alertes SOS & countdown
-SigninCubit         → Authentification utilisateur
-ContactsCubit       → CRUD contacts d'urgence
-SettingsCubit       → Préférences utilisateur
-NavigationCubit     → Routage & tab navigation
+// Cubits Hierarchy
+AlertCubit          → SOS Alerts & countdown management
+SigninCubit         → User Authentication
+ContactsCubit       → Emergency Contacts CRUD
+SettingsCubit       → User Preferences
+NavigationCubit     → Routing & tab navigation
 ```
 
-**Avantage du Cubit** : Plus léger que BLoC, idéal pour des mutations d'état simples avec une logique asynchrone claire.
+**Cubit Advantage** : Lighter than BLoC, ideal for simple state mutations with clear asynchronous logic.
 
 ```dart
 // Exemple : AlertCubit avec Stream.periodic robuste
@@ -77,19 +77,19 @@ class AlertCubit extends Cubit<AlertState> {
 }
 ```
 
-### 2️⃣ Supabase - Backend Serverless
+### 2️⃣ Supabase - Serverless Backend
 
-Intégration complète du stack **Supabase** :
+Complete **Supabase** stack integration:
 
 - **Authentication** : JWT, Magic Links, auth.currentUser
-- **Database** : PostgreSQL avec RLS (Row-Level Security)
-- **Storage** : Photos d'incidents & media files
-- **Realtime** : WebSocket pour sync alertes en direct
+- **Database** : PostgreSQL with RLS (Row-Level Security)
+- **Storage** : Incident photos & media files
+- **Realtime** : WebSocket for real-time alert sync
 
-**Architecture des Services :**
+**Services Architecture:**
 
 ```
-Data Layer (Services Supabase)
+Data Layer (Supabase Services)
     ↓
 Repository Pattern (Interfaces)
     ↓
@@ -113,20 +113,20 @@ Presentation Layer (Cubits + UI)
 | **Bundle Size** | ⚠️ Lourd | ✅ Léger | **flutter_map** gagne |
 | **Licence** | ⚠️ Restrictions | ✅ FOSS | **flutter_map** gagne |
 
-#### 🐛 Erreurs Rencontrées
+#### 🐛 Errors Encountered
 
 ```
 ❌ TypeError: maps_api is undefined (Web)
 ❌ PlatformException: Initialization of Maps failed (Windows)
-❌ Incompatibilité types pour web platform
+❌ Type incompatibility for web platform
 ```
 
-**Solution implémentée** : 
-- ✅ `flutter_map: ^8.2.2` (fork Dart pur, multi-plateforme)
-- ✅ `latlong2: ^0.9.1` (gestion des coordonnées)
-- ✅ **CartoDB Dark Matter tiles** pour l'esthétique militaire
+**Implemented Solution**: 
+- ✅ `flutter_map: ^8.2.2` (Pure Dart fork, multi-platform)
+- ✅ `latlong2: ^0.9.1` (Coordinate management)
+- ✅ **CartoDB Dark Matter tiles** for military aesthetics
 
-#### 🗺️ Configuration Cartographique
+#### 🗺️ Cartographic Configuration
 
 ```dart
 // Map avec tiles CartoDB Dark Matter (Military Grade)
@@ -139,20 +139,20 @@ TileLayer(
 
 ---
 
-## ⚡ Module Alert - Le Cœur du Projet
+## ⚡ Alert Module - Heart of the Project
 
-### Architecture Modulaire : 8 Widgets Composables
+### Modular Architecture: 8 Composable Widgets
 
 ```
 lib/presentaion/alert/
 ├── bloc/
-│   ├── alert_cubit.dart           # Logic countdown 3s
-│   └── alert_state.dart           # États UI
+│   ├── alert_cubit.dart           # 3s countdown logic
+│   └── alert_state.dart           # UI States
 ├── pages/
-│   ├── home_page.dart             # Bouton SOS
-│   ├── map_alert_paged.dart       # Alerte + carte
-│   └── report_incident_page.dart  # Formulaire incident
-├── widgets/                        # 8 composants réutilisables
+│   ├── home_page.dart             # SOS Button
+│   ├── map_alert_paged.dart       # Alert + Map
+│   └── report_incident_page.dart  # Incident form
+├── widgets/                        # 8 reusable components
 │   ├── cinematic_gradient_overlay.dart
 │   ├── control_area_widget.dart
 │   ├── description_field_widget.dart
@@ -162,10 +162,10 @@ lib/presentaion/alert/
 │   ├── media_card_widget.dart
 │   ├── status_cards_widget.dart
 │   └── widgets.dart               # Barrel export
-└── constants.dart                 # Thème centralisé
+└── constants.dart                 # Centralized theme
 ```
 
-### 🔴 Logique du Countdown 3 Secondes (Stream.periodic)
+### 🔴 3-Second Countdown Logic (Stream.periodic)
 
 ```dart
 class AlertCubit extends Cubit<AlertState> {
@@ -212,30 +212,30 @@ class AlertCubit extends Cubit<AlertState> {
 ```
 
 **UX Flow** :
-1. Tap le bouton **SOS** → État `AlertLoading`
-2. App récupère le GPS 📍
-3. Countdown affiche **3... 2... 1...**
-4. À **0 secondes**, l'alerte est envoyée à Supabase
-5. État passe à `AlertSuccess` avec récapitulatif
+1. Tap the **SOS** button → `AlertLoading` state
+2. App retrieves GPS 📍
+3. Countdown displays **3... 2... 1...**
+4. At **0 seconds**, alert is sent to Supabase
+5. State changes to `AlertSuccess` with summary
 
 ---
 
 ## 🎨 Design System "Tactical Dark"
 
-### Palette de Couleurs (AlertColors)
+### Color Palette (AlertColors)
 
 ```dart
-// Surfaces sombres (Military Grade look)
+// Dark surfaces (Military Grade look)
 Color.black              = #000000
 Color.darkSurface        = #1A1A1A
 Color.darkSurfaceAlt     = #1E1E1E
 Color.darkInput          = #262626
 
-// Couleurs d'accent
+// Accent colors
 Color.redAccent          = #DC143C  (Crimson - Alert)
 Color.greenAccent        = #00FF00  (Success)
 
-// Textes
+// Text colors
 Color.textPrimary        = #FFFFFF
 Color.textSecondary      = #999999
 Color.textTertiary       = #666666
@@ -252,25 +252,25 @@ sosButtonSize = 200.0
 cancelButtonSize = 70.0
 ```
 
-### Composants UI Senior 🎯
+### Senior UI Components 🎯
 
-1. **Bouton SOS** : Circle 200x200 avec double shadow glow effect
-2. **Glassmorphism** : Overlays semi-transparents avec dégradés
-3. **Marqueur Pulsant** : Breathing effect sur carte
-4. **CartoDB Dark Matter** : Tiles avec inversion couleurs (NVG style)
+1. **SOS Button** : Circle 200x200 with double shadow glow effect
+2. **Glassmorphism** : semi-transparent overlays with gradients
+3. **Pulsing Marker** : Breathing effect on map
+4. **CartoDB Dark Matter** : Tiles with color inversion (NVG style)
 
 ---
 
-## 📦 Structure du Projet
+## 📦 Project Structure
 
-### Arborescence (Clean Architecture)
+### Tree Structure (Clean Architecture)
 
 ```
 vanguard_ops/
 ├── lib/
 │   ├── main.dart                    Entry point
 │   ├── service_loacator.dart        GetIt DI setup
-│   ├── common/                      Composants communs
+│   ├── common/                      Common components
 │   │   ├── bloc/
 │   │   ├── helper/
 │   │   └── wigets/
@@ -287,7 +287,7 @@ vanguard_ops/
 │   │   ├── auth/
 │   │   └── contacts/
 │   └── presentaion/                 UI Layer
-│       ├── alert/                   ⭐ COEUR DU PROJET
+│       ├── alert/                   ⭐ HEART OF PROJECT
 │       ├── auth/
 │       ├── contact/
 │       ├── home/
@@ -309,47 +309,47 @@ Data (Repositories, Services)
 
 ---
 
-## 🚀 Guide Installation "Zero Error"
+## 🚀 Installation Guide "Zero Error"
 
-### Prérequis
+### Prerequisites
 - ✅ **Flutter 3.10.4+** : [flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
-- ✅ **Dart 3.10.4+** (fourni avec Flutter)
+- ✅ **Dart 3.10.4+** (provided with Flutter)
 - ✅ **Git**
 - ✅ **Supabase Account** : [supabase.com](https://supabase.com)
 
-### Étapes d'Installation
+### Installation Steps
 
-#### 1️⃣ Clone du Dépôt
+#### 1️⃣ Clone Repository
 ```bash
 git clone <repository-url> vanguard_ops
 cd vanguard_ops
 ```
 
-#### 2️⃣ Nettoyer le Cache Flutter (Critique ⚠️)
+#### 2️⃣ Clean Flutter Cache (Critical ⚠️)
 ```bash
 flutter clean
 ```
-> **Pourquoi ?** Les anciennes dépendances (google_maps_flutter) peuvent rester en cache et causer `TypeError: maps undefined` lors du web build.
+> **Why?** Old dependencies (google_maps_flutter) can remain in cache and cause `TypeError: maps undefined` on web build.
 
-#### 3️⃣ Récupérer les Dépendances
+#### 3️⃣ Get Dependencies
 ```bash
 flutter pub get
 ```
 
-#### 4️⃣ Configuration Supabase (.env)
-Crée un fichier `.env` à la racine :
+#### 4️⃣ Supabase Configuration (.env)
+Create a `.env` file at the root:
 ```env
 SUPABASE_URL=https://xxxxxxxxxx.supabase.co
 SUPABASE_ANON_KEY=eyJxxxxxxxxx...
 ```
-> 🔐 Ajoute `.env` à `.gitignore` !
+> 🔐 Add `.env` to `.gitignore`!
 
-#### 5️⃣ Vérifier Configuration
+#### 5️⃣ Verify Configuration
 ```bash
 flutter doctor
 ```
 
-#### 6️⃣ Lancer l'Application
+#### 6️⃣ Launch Application
 ```bash
 # Web (Chrome)
 flutter run -d chrome
@@ -364,22 +364,22 @@ flutter run -d ios
 flutter run -d windows
 ```
 
-### Dépannage Installation
+### Installation Troubleshooting
 
-#### ❌ Erreur : `TypeError: maps undefined` (Web)
+#### ❌ Error: `TypeError: maps undefined` (Web)
 ```bash
 flutter clean
 flutter pub get
 flutter run -d chrome
 ```
 
-#### ❌ Erreur : `Gradle sync failed`
+#### ❌ Error: `Gradle sync failed`
 ```bash
 cd android && ./gradlew clean && cd ..
 flutter clean && flutter pub get
 ```
 
-#### ❌ Erreur : `cocoapods: No matching Pods`
+#### ❌ Error: `cocoapods: No matching Pods`
 ```bash
 cd ios && rm -rf Pods Podfile.lock && cd ..
 flutter clean && flutter pub get
@@ -388,7 +388,7 @@ cd ios && pod install && cd ..
 
 ---
 
-## 🔧 Dépendances Clés
+## 🔧 Key Dependencies
 
 ### Gestion d'État & Architecture
 ```yaml
@@ -639,58 +639,4 @@ Tous droits réservés. Usage interne uniquement.
 
 Ce README est votre **bible technique**. Avant de coder, consultez-le. Avant de deployer, validez la checklist. Vos contributions futures dépendent de cette documentation.
 
-*Fait avec ⚡ par une équipe senior | Qualité Enterprise Grade* 🚀 -->
-# 🛡️ VANGUARD OPS - RDAPP
-## *Tactical Security Response Application - Enterprise Edition*
-
-![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
-![Flutter](https://img.shields.io/badge/Flutter-3.10.4%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)
-![Dart](https://img.shields.io/badge/Dart-3.10.4%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)
-![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20BLOC-FF6B6B?style=for-the-badge)
-![Backend](https://img.shields.io/badge/Backend-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
-![License](https://img.shields.io/badge/License-Private-red?style=for-the-badge)
-
----
-
-## 📋 Table of Contents
-
-1. [🎯 Project Overview](#-project-overview)
-2. [🏗️ Technical Architecture](#️-technical-architecture)
-3. [⚡ Alert Module - The Heart of the Project](#-alert-module---the-heart-of-the-project)
-4. [🎨 "Tactical Dark" Design System](#-tactical-dark-design-system)
-5. [📦 Project Structure](#-project-structure)
-6. [🚀 "Zero Error" Installation Guide](#-zero-error-installation-guide)
-7. [🔧 Key Dependencies](#-key-dependencies)
-8. [📱 Core Features](#-core-features)
-9. [🛠️ Development & Testing](#️-development--testing)
-10. [⚠️ Maps Migration: Lessons Learned](#️-maps-migration-lessons-learned)
-11. [👨‍💻 Coding Conventions](#-coding-conventions)
-
----
-
-## 🎯 Project Overview
-
-**VANGUARD OPS** is a **high-end** tactical security application designed for emergency response teams (Law Enforcement, Firefighters, Security Personnel). It enables real-time alert management with instantaneous geolocation, emergency contact communication, and a centralized monitoring system.
-
-### Key Characteristics
-- ✅ **Tactical Alerts**: SOS deployment with an intelligent 3-second countdown.
-- ✅ **Precise Geolocation**: Integration of `flutter_map` + `latlong2` (OpenStreetMap).
-- ✅ **Enterprise Authentication**: Supabase Auth with SSO capabilities.
-- ✅ **Real-time Backend**: Supabase Realtime for live alert/contact synchronization.
-- ✅ **Military Design**: "Tactical Dark" interface using CartoDB Dark Matter tiles.
-- ✅ **Cross-Platform**: Fully compatible with iOS, Android, Web, Windows, macOS, and Linux.
-
----
-
-## 🏗️ Technical Architecture
-
-### 1️⃣ BLoC/Cubit Pattern - Reactive State Management
-The application utilizes **flutter_bloc** for professional and scalable state management.
-
-```dart
-// Cubit Hierarchy
-AlertCubit          → SOS Alerts & Countdown management
-SigninCubit         → User Authentication
-ContactsCubit       → Emergency Contacts CRUD
-SettingsCubit       → User Preferences
-NavigationCubit     → Routing & Tab Navigation
+*Fait avec ⚡ par une équipe senior | Qualité Enterprise Grade*  -->
