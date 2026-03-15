@@ -1,5 +1,5 @@
-<!-- # 🛡️ VANGUARD OPS - RDAPP
-## *Tactical Security Response Application - Enterprise Edition*
+<! 🛡️ VANGUARD OPS - RDAPP
+ *Tactical Security Response Application - Enterprise Edition*
 
 ![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
 ![Flutter](https://img.shields.io/badge/Flutter-3.10.4%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)
