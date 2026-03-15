@@ -1,4 +1,4 @@
-<!-- <!-- # 🛡️ VANGUARD OPS - RDAPP
+<!-- # 🛡️ VANGUARD OPS - RDAPP
 ## *Tactical Security Response Application - Enterprise Edition*
 
 ![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
@@ -639,4 +639,4 @@ All rights reserved. Internal use only.
 
 This README is your **technical bible**. Before coding, consult it. Before deploying, validate the checklist. Your future contributions depend on this documentation.
 
-*Made with ⚡ by a senior team | Enterprise Grade Quality*  -->
+*Made with ⚡ by a senior team | Enterprise Grade Quality* 
