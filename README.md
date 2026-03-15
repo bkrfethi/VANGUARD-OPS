@@ -1,4 +1,4 @@
-# 🛡️ VANGUARD OPS - RDAPP
+<!-- # 🛡️ VANGUARD OPS - RDAPP
 ## *Tactical Security Response Application - Enterprise Edition*
 
 ![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
@@ -639,4 +639,58 @@ Tous droits réservés. Usage interne uniquement.
 
 Ce README est votre **bible technique**. Avant de coder, consultez-le. Avant de deployer, validez la checklist. Vos contributions futures dépendent de cette documentation.
 
-*Fait avec ⚡ par une équipe senior | Qualité Enterprise Grade* 🚀
+*Fait avec ⚡ par une équipe senior | Qualité Enterprise Grade* 🚀 -->
+# 🛡️ VANGUARD OPS - RDAPP
+## *Tactical Security Response Application - Enterprise Edition*
+
+![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
+![Flutter](https://img.shields.io/badge/Flutter-3.10.4%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)
+![Dart](https://img.shields.io/badge/Dart-3.10.4%2B-0175C2?style=for-the-badge&logo=dart&logoColor=white)
+![Architecture](https://img.shields.io/badge/Architecture-Clean%20%2F%20BLOC-FF6B6B?style=for-the-badge)
+![Backend](https://img.shields.io/badge/Backend-Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
+![License](https://img.shields.io/badge/License-Private-red?style=for-the-badge)
+
+---
+
+## 📋 Table of Contents
+
+1. [🎯 Project Overview](#-project-overview)
+2. [🏗️ Technical Architecture](#️-technical-architecture)
+3. [⚡ Alert Module - The Heart of the Project](#-alert-module---the-heart-of-the-project)
+4. [🎨 "Tactical Dark" Design System](#-tactical-dark-design-system)
+5. [📦 Project Structure](#-project-structure)
+6. [🚀 "Zero Error" Installation Guide](#-zero-error-installation-guide)
+7. [🔧 Key Dependencies](#-key-dependencies)
+8. [📱 Core Features](#-core-features)
+9. [🛠️ Development & Testing](#️-development--testing)
+10. [⚠️ Maps Migration: Lessons Learned](#️-maps-migration-lessons-learned)
+11. [👨‍💻 Coding Conventions](#-coding-conventions)
+
+---
+
+## 🎯 Project Overview
+
+**VANGUARD OPS** is a **high-end** tactical security application designed for emergency response teams (Law Enforcement, Firefighters, Security Personnel). It enables real-time alert management with instantaneous geolocation, emergency contact communication, and a centralized monitoring system.
+
+### Key Characteristics
+- ✅ **Tactical Alerts**: SOS deployment with an intelligent 3-second countdown.
+- ✅ **Precise Geolocation**: Integration of `flutter_map` + `latlong2` (OpenStreetMap).
+- ✅ **Enterprise Authentication**: Supabase Auth with SSO capabilities.
+- ✅ **Real-time Backend**: Supabase Realtime for live alert/contact synchronization.
+- ✅ **Military Design**: "Tactical Dark" interface using CartoDB Dark Matter tiles.
+- ✅ **Cross-Platform**: Fully compatible with iOS, Android, Web, Windows, macOS, and Linux.
+
+---
+
+## 🏗️ Technical Architecture
+
+### 1️⃣ BLoC/Cubit Pattern - Reactive State Management
+The application utilizes **flutter_bloc** for professional and scalable state management.
+
+```dart
+// Cubit Hierarchy
+AlertCubit          → SOS Alerts & Countdown management
+SigninCubit         → User Authentication
+ContactsCubit       → Emergency Contacts CRUD
+SettingsCubit       → User Preferences
+NavigationCubit     → Routing & Tab Navigation
