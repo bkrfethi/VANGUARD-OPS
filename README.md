@@ -162,7 +162,6 @@ lib/presentaion/alert/
 │   ├── media_card_widget.dart
 │   ├── status_cards_widget.dart
 │   └── widgets.dart               # Barrel export
-└── constants.dart                 # Centralized theme
 ```
 
 ### 🔴 3-Second Countdown Logic (Stream.periodic)
@@ -220,46 +219,6 @@ class AlertCubit extends Cubit<AlertState> {
 
 ---
 
-## 🎨 Design System "Tactical Dark"
-
-### Color Palette (AlertColors)
-
-```dart
-// Dark surfaces (Military Grade look)
-Color.black              = #000000
-Color.darkSurface        = #1A1A1A
-Color.darkSurfaceAlt     = #1E1E1E
-Color.darkInput          = #262626
-
-// Accent colors
-Color.redAccent          = #DC143C  (Crimson - Alert)
-Color.greenAccent        = #00FF00  (Success)
-
-// Text colors
-Color.textPrimary        = #FFFFFF
-Color.textSecondary      = #999999
-Color.textTertiary       = #666666
-```
-
-### Dimensions & Spacing
-
-```dart
-paddingXS  = 8.0    paddingS   = 12.0   paddingM   = 16.0
-paddingL   = 20.0   paddingXL  = 24.0   paddingXXL = 32.0
-
-radiusS  = 12.0   radiusM  = 16.0   radiusL  = 20.0
-sosButtonSize = 200.0
-cancelButtonSize = 70.0
-```
-
-### Senior UI Components 🎯
-
-1. **SOS Button** : Circle 200x200 with double shadow glow effect
-2. **Glassmorphism** : semi-transparent overlays with gradients
-3. **Pulsing Marker** : Breathing effect on map
-4. **CartoDB Dark Matter** : Tiles with color inversion (NVG style)
-
----
 
 ## 📦 Project Structure
 
@@ -287,7 +246,7 @@ vanguard_ops/
 │   │   ├── auth/
 │   │   └── contacts/
 │   └── presentaion/                 UI Layer
-│       ├── alert/                   ⭐ HEART OF PROJECT
+│       ├── alert/                   
 │       ├── auth/
 │       ├── contact/
 │       ├── home/
@@ -321,7 +280,7 @@ Data (Repositories, Services)
 
 #### 1️⃣ Clone Repository
 ```bash
-git clone <repository-url> vanguard_ops
+git clone https://github.com/bkrfethi/VANGUARD-OPS.git
 cd vanguard_ops
 ```
 
@@ -342,51 +301,8 @@ Create a `.env` file at the root:
 SUPABASE_URL=https://xxxxxxxxxx.supabase.co
 SUPABASE_ANON_KEY=eyJxxxxxxxxx...
 ```
-> 🔐 Add `.env` to `.gitignore`!
 
-#### 5️⃣ Verify Configuration
-```bash
-flutter doctor
-```
 
-#### 6️⃣ Launch Application
-```bash
-# Web (Chrome)
-flutter run -d chrome
-
-# Android
-flutter run -d android
-
-# iOS
-flutter run -d ios
-
-# Windows
-flutter run -d windows
-```
-
-### Installation Troubleshooting
-
-#### ❌ Error: `TypeError: maps undefined` (Web)
-```bash
-flutter clean
-flutter pub get
-flutter run -d chrome
-```
-
-#### ❌ Error: `Gradle sync failed`
-```bash
-cd android && ./gradlew clean && cd ..
-flutter clean && flutter pub get
-```
-
-#### ❌ Error: `cocoapods: No matching Pods`
-```bash
-cd ios && rm -rf Pods Podfile.lock && cd ..
-flutter clean && flutter pub get
-cd ios && pod install && cd ..
-```
-
----
 
 ## 🔧 Key Dependencies
 
@@ -407,7 +323,7 @@ shared_preferences: ^2.5.4    # Local storage
 
 ### Mapping
 ```yaml
-flutter_map: ^8.2.2           # ✅ Multi-platform
+flutter_map: ^8.2.2           #  Multi-platform
 latlong2: ^0.9.1              # GPS Coordinates
 ```
 
@@ -446,86 +362,6 @@ cupertino_icons: ^1.0.8
 - Structured fields
 - Media upload to Supabase Storage
 - Validation + user feedback
-
----
-
-## 🛠️ Development & Testing
-
-### Run Tests
-```bash
-flutter test                           # All tests
-flutter test test/widget_test.dart    # Specific test
-flutter test --coverage               # With coverage
-```
-
-### Dart Conventions
-- **Naming** : camelCase for variables, CONSTANT_CASE for constants
-- **Null-Safety** : Use `final`, `required`, `late`
-- **Const Constructors** : Prefer `const` for widgets
-- **Formatting** : `dart format lib/`
-- **Analysis** : `dart analyze`
-
-### BLoC Best Practices
-
-```dart
-// ✅ GOOD : Pattern matching
-BlocBuilder<AlertCubit, AlertState>(
-  builder: (context, state) => state.maybeWhen(
-    timerInProgress: (count) => CountdownDisplay(count),
-    success: (alert) => SuccessScreen(),
-    orElse: () => SizedBox.shrink(),
-  ),
-)
-
-// ❌ BAD : if statements
-if (state is AlertInitial) {
-  // Duplicated code
-}
-```
-
----
-
-## ⚠️ Maps Migration: Lessons Learned
-
-### History
-
-**Before (Problematic)** ❌
-```dart
-import 'package:google_maps_flutter/google_maps_flutter.dart';
-// Web : TypeError: maps_api is undefined
-// Windows : PlatformException: Initialization of Maps failed
-// Bundle : +15MB
-```
-
-**After (Resolved)** ✅
-```dart
-import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
-// Web : ✅ OK
-// Windows : ✅ OK
-// Bundle : -10MB
-```
-
-### Migration Checklist
-
-- [x] Replace google_maps_flutter → flutter_map
-- [x] GoogleMapController → FlutterMapState
-- [x] LatLng conversions (compatible)
-- [x] Markers → MarkerLayer
-- [x] Test Web (Chrome)
-- [x] Test Windows
-- [x] Test Android/iOS
-- [x] Optimize tiles with color filters
-
-### Lessons Learned
-
-| Problem | Root Cause | Solution |
-|---------|-----------|----------|
-| maps undefined | API Web | flutter_map |
-| Windows init fail | Not supported | flutter_map |
-| Bundle +15MB | google_maps deps | flutter_map |
-| Type mismatch LatLng | Two packages | latlong2 only |
-| Tiles not loading | Invalid URL | userAgentPackageName |
 
 ---
 
@@ -589,54 +425,8 @@ lib/presentaion/alert/
 
 ---
 
-## 📞 Support & Documentation
 
-### Resources
-- 📖 [Flutter Docs](https://flutter.dev/docs)
-- 📖 [Supabase Docs](https://supabase.com/docs)
-- 📖 [flutter_bloc](https://bloclibrary.dev)
-- 📖 [flutter_map](https://github.com/fleaflet/flutter_map)
-- 📖 [Clean Architecture](https://resocoder.com/clean-code)
 
-### FAQ
 
-**Q: Why Supabase instead of Firebase?**  
-A: Open-source, PostgreSQL, better pricing, integrated RLS
 
-**Q: How to add a new feature?**  
-A: Create a folder in `presentaion/<feature>` with BLoC/pages/widgets structure
 
-**Q: Web build fails with undefined maps?**  
-A: `flutter clean && flutter pub get && flutter run -d chrome`
-
-**Q: How to test alerts offline?**  
-A: Use Android emulator with Airplane mode, or NetLimiter
-
----
-
-## 📄 License
-
-**Private & Proprietary** 🔐  
-All rights reserved. Internal use only.
-
----
-
-## ✅ Validated By
-
-| Role | Name | Date |
-|------|------|------|
-| Lead Developer | Senior Dev Team | 2026-03-14 |
-| Technical Writer | Senior Writer | 2026-03-14 |
-
----
-
-## 📌 Last Updated
-**2026-03-14** | Version **1.0.0** | Full Refactor ✅
-
----
-
-**🛡️ VANGUARD OPS : The Source of Truth for Developers**
-
-This README is your **technical bible**. Before coding, consult it. Before deploying, validate the checklist. Your future contributions depend on this documentation.
-
-*Made with ⚡ by a senior team | Enterprise Grade Quality* 
