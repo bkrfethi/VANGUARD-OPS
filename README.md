@@ -64,7 +64,7 @@ NavigationCubit     → Routing & tab navigation
 **Cubit Advantage** : Lighter than BLoC, ideal for simple state mutations with clear asynchronous logic.
 
 ```dart
-// Exemple : AlertCubit avec Stream.periodic robuste
+// Example : AlertCubit with robust Stream.periodic
 class AlertCubit extends Cubit<AlertState> {
   void _startCountdownTimer() {
     _timerSubscription = Stream.periodic(
@@ -390,7 +390,7 @@ cd ios && pod install && cd ..
 
 ## 🔧 Key Dependencies
 
-### Gestion d'État & Architecture
+### State Management & Architecture
 ```yaml
 flutter_bloc: ^8.1.6          # BLoC pattern
 dartz: ^0.10.1               # Either<Failure, Success>
@@ -398,20 +398,20 @@ equatable: ^2.0.8            # Value equality
 get_it: ^7.7.0               # Service locator (DI)
 ```
 
-### Backend & Authentification
+### Backend & Authentication
 ```yaml
 supabase_flutter: ^2.6.0      # Auth + DB + Storage + Realtime
 flutter_dotenv: ^5.1.0        # Env variables
 shared_preferences: ^2.5.4    # Local storage
 ```
 
-### Cartographie
+### Mapping
 ```yaml
-flutter_map: ^8.2.2           # ✅ Multi-plateforme
-latlong2: ^0.9.1              # Coordonnées GPS
+flutter_map: ^8.2.2           # ✅ Multi-platform
+latlong2: ^0.9.1              # GPS Coordinates
 ```
 
-### Géolocalisation & UI
+### Geolocation & UI
 ```yaml
 geolocator: ^14.0.2
 permission_handler:
@@ -421,54 +421,54 @@ cupertino_icons: ^1.0.8
 
 ---
 
-## 📱 Fonctionnalités Principales
+## 📱 Main Features
 
-### 1️⃣ Système d'Alerte SOS
-- Tap → Countdown 3s → Envoi GPS + description → Contacts notifiés
-- Annulation possible pendant countdown
+### 1️⃣ SOS Alert System
+- Tap → 3s Countdown → Send GPS + description → Contacts notified
+- Cancellation possible during countdown
 
-### 2️⃣ Gestion Contacts d'Urgence
-- CRUD complet
-- Synchronisation Realtime
-- Catégorisation personnalisée
+### 2️⃣ Emergency Contact Management
+- Full CRUD
+- Real-time synchronization
+- Custom categorization
 
-### 3️⃣ Authentification Enterprise
-- Magic Link (sans mot de passe)
+### 3️⃣ Enterprise Authentication
+- Magic Link (no password)
 - JWT + RLS
-- Session persistent
+- Persistent session
 
-### 4️⃣ Monitoring Cartographique
-- Carte flutter_map avec CartoDB Dark Matter
-- Marqueur pulsant avec animation
+### 4️⃣ Cartographic Monitoring
+- flutter_map with CartoDB Dark Matter
+- Pulsing marker with animation
 - Offline tiles cache
 
-### 5️⃣ Formulaire d'Incident
-- Champs structurés
-- Upload media vers Supabase Storage
-- Validation + feedback utilisateur
+### 5️⃣ Incident Form
+- Structured fields
+- Media upload to Supabase Storage
+- Validation + user feedback
 
 ---
 
-## 🛠️ Développement & Tests
+## 🛠️ Development & Testing
 
-### Exécuter les Tests
+### Run Tests
 ```bash
-flutter test                           # Tous les tests
-flutter test test/widget_test.dart    # Test spécifique
-flutter test --coverage               # Avec coverage
+flutter test                           # All tests
+flutter test test/widget_test.dart    # Specific test
+flutter test --coverage               # With coverage
 ```
 
-### Conventions Dart
-- **Naming** : camelCase pour variables, CONSTANT_CASE pour constantes
-- **Null-Safety** : Utiliser `final`, `required`, `late`
-- **Const Constructors** : Préférer `const` pour widgets
+### Dart Conventions
+- **Naming** : camelCase for variables, CONSTANT_CASE for constants
+- **Null-Safety** : Use `final`, `required`, `late`
+- **Const Constructors** : Prefer `const` for widgets
 - **Formatting** : `dart format lib/`
 - **Analysis** : `dart analyze`
 
 ### BLoC Best Practices
 
 ```dart
-// ✅ BON : Pattern matching
+// ✅ GOOD : Pattern matching
 BlocBuilder<AlertCubit, AlertState>(
   builder: (context, state) => state.maybeWhen(
     timerInProgress: (count) => CountdownDisplay(count),
@@ -477,19 +477,19 @@ BlocBuilder<AlertCubit, AlertState>(
   ),
 )
 
-// ❌ MAUVAIS : if statements
+// ❌ BAD : if statements
 if (state is AlertInitial) {
-  // Code dupliqué
+  // Duplicated code
 }
 ```
 
 ---
 
-## ⚠️ Migration Maps: Leçons Apprises
+## ⚠️ Maps Migration: Lessons Learned
 
-### Historique
+### History
 
-**Avant (Problématique)** ❌
+**Before (Problematic)** ❌
 ```dart
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Web : TypeError: maps_api is undefined
@@ -497,7 +497,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 // Bundle : +15MB
 ```
 
-**Après (Résolvé)** ✅
+**After (Resolved)** ✅
 ```dart
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -506,32 +506,32 @@ import 'package:latlong2/latlong.dart';
 // Bundle : -10MB
 ```
 
-### Checklist Migration
+### Migration Checklist
 
-- [x] Remplacer google_maps_flutter → flutter_map
+- [x] Replace google_maps_flutter → flutter_map
 - [x] GoogleMapController → FlutterMapState
 - [x] LatLng conversions (compatible)
 - [x] Markers → MarkerLayer
-- [x] Tester Web (Chrome)
-- [x] Tester Windows
-- [x] Tester Android/iOS
-- [x] Optimiser tiles avec color filters
+- [x] Test Web (Chrome)
+- [x] Test Windows
+- [x] Test Android/iOS
+- [x] Optimize tiles with color filters
 
 ### Lessons Learned
 
-| Problème | Cause | Solution |
-|----------|-------|----------|
+| Problem | Root Cause | Solution |
+|---------|-----------|----------|
 | maps undefined | API Web | flutter_map |
-| Windows init fail | Non-supporté | flutter_map |
+| Windows init fail | Not supported | flutter_map |
 | Bundle +15MB | google_maps deps | flutter_map |
-| Type mismatch LatLng | Deux packages | latlong2 uniquement |
-| Tiles pas chargées | URL invalid | userAgentPackageName |
+| Type mismatch LatLng | Two packages | latlong2 only |
+| Tiles not loading | Invalid URL | userAgentPackageName |
 
 ---
 
-## 👨‍💻 Conventions de Code
+## 👨‍💻 Code Conventions
 
-### 1. Nommage
+### 1. Naming
 ```dart
 final alertCubit = AlertCubit();
 void sendEmergencyAlert() {}
@@ -540,12 +540,12 @@ const int COUNTDOWN_DURATION = 3;
 
 ### 2. DocStrings
 ```dart
-/// Envoie une alerte SOS avec position GPS et description.
-/// Lance un countdown de 3 secondes avant envoi effectif.
+/// Sends an SOS alert with GPS position and description.
+/// Launches a 3-second countdown before actual send.
 Future<void> triggerEmergency(String description) async {}
 ```
 
-### 3. Error Handling avec Dartz
+### 3. Error Handling with Dartz
 ```dart
 result.fold(
   (failure) => emit(AlertError(failure.message)),
@@ -553,7 +553,7 @@ result.fold(
 );
 ```
 
-### 4. States (Immuables)
+### 4. States (Immutable)
 ```dart
 abstract class AlertState extends Equatable {
   const AlertState();
@@ -566,26 +566,26 @@ class AlertInitial extends AlertState {
 }
 ```
 
-### 5. Organiser par Feature
+### 5. Organize by Feature
 ```
 lib/presentaion/alert/
-├── bloc/       ← Gestion d'état
-├── pages/      ← Écrans complets
-├── widgets/    ← Composants réutilisables
+├── bloc/       ← State management
+├── pages/      ← Full screens
+├── widgets/    ← Reusable components
 └── constants.dart
 ```
 
 ---
 
-## 🚀 Roadmap Futur
+## 🚀 Future Roadmap
 
-- [ ] **Push Notifications** : FCM pour alertes offline
-- [ ] **Voice Messaging** : SOS audio codifié
-- [ ] **AI Detection** : Reconnaissance incidents
-- [ ] **Offline Mode** : Sync données
+- [ ] **Push Notifications** : FCM for offline alerts
+- [ ] **Voice Messaging** : Coded audio SOS
+- [ ] **AI Detection** : Incident recognition
+- [ ] **Offline Mode** : Data sync
 - [ ] **Multi-language** : i18n (EN/FR/ES)
-- [ ] **Analytics Dashboard** : Reporting temps réel
-- [ ] **Deep Linking** : Partage alertes
+- [ ] **Analytics Dashboard** : Real-time reporting
+- [ ] **Deep Linking** : Share alerts
 
 ---
 
@@ -600,30 +600,30 @@ lib/presentaion/alert/
 
 ### FAQ
 
-**Q: Pourquoi Supabase et pas Firebase ?**  
-A: Open-source, PostgreSQL, meilleur pricing, RLS intégré
+**Q: Why Supabase instead of Firebase?**  
+A: Open-source, PostgreSQL, better pricing, integrated RLS
 
-**Q: Comment ajouter une nouvelle feature ?**  
-A: Crées un dossier dans `presentaion/<feature>` avec la structure BLoC/pages/widgets
+**Q: How to add a new feature?**  
+A: Create a folder in `presentaion/<feature>` with BLoC/pages/widgets structure
 
-**Q: Web build plante avec undefined maps ?**  
+**Q: Web build fails with undefined maps?**  
 A: `flutter clean && flutter pub get && flutter run -d chrome`
 
-**Q: Comment tester les alertes offline ?**  
-A: Utiliser l'émulateur Android avec mode Airplane, ou NetLimiter
+**Q: How to test alerts offline?**  
+A: Use Android emulator with Airplane mode, or NetLimiter
 
 ---
 
 ## 📄 License
 
 **Private & Proprietary** 🔐  
-Tous droits réservés. Usage interne uniquement.
+All rights reserved. Internal use only.
 
 ---
 
-## ✅ Validé Par
+## ✅ Validated By
 
-| Rôle | Nom | Date |
+| Role | Name | Date |
 |------|------|------|
 | Lead Developer | Senior Dev Team | 2026-03-14 |
 | Technical Writer | Senior Writer | 2026-03-14 |
@@ -635,8 +635,8 @@ Tous droits réservés. Usage interne uniquement.
 
 ---
 
-**🛡️ VANGUARD OPS : La Source de Vérité pour les Développeurs**
+**🛡️ VANGUARD OPS : The Source of Truth for Developers**
 
-Ce README est votre **bible technique**. Avant de coder, consultez-le. Avant de deployer, validez la checklist. Vos contributions futures dépendent de cette documentation.
+This README is your **technical bible**. Before coding, consult it. Before deploying, validate the checklist. Your future contributions depend on this documentation.
 
-*Fait avec ⚡ par une équipe senior | Qualité Enterprise Grade*  -->
+*Made with ⚡ by a senior team | Enterprise Grade Quality*  -->
