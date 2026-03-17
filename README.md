@@ -94,8 +94,6 @@ The application uses **flutter_map** and **latlong2** for displaying real-time l
 
 
 
-```
-
 ---
 
 ## ⚡ Alert Module - Heart of the Project
