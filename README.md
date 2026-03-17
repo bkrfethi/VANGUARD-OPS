@@ -1,5 +1,5 @@
-<! 🛡️ VANGUARD OPS - RDAPP
- *Tactical Security Response Application - Enterprise Edition*
+# 🛡️ VANGUARD OPS
+*Tactical Security Response Application - Enterprise Edition*
 
 ![Vanguard](https://img.shields.io/badge/Vanguard%20Ops-v1.0.0-DC143C?style=for-the-badge&logo=flutter&logoColor=white)
 ![Flutter](https://img.shields.io/badge/Flutter-3.10.4%2B-02569B?style=for-the-badge&logo=flutter&logoColor=white)
@@ -84,7 +84,7 @@ Domain Layer (UseCases)
 Presentation Layer (Cubits + UI)
 ```
 
-### 3. Geolocation & Mapping
+### 3️⃣ Geolocation & Mapping
 
 The application uses **flutter_map** and **latlong2** for displaying real-time location data on interactive maps. This enables emergency responders to visualize incident locations and coordinate operations across multiple platforms.
 
@@ -103,7 +103,7 @@ The application uses **flutter_map** and **latlong2** for displaying real-time l
 ### Modular Architecture: 8 Composable Widgets
 
 ```
-lib/presentaion/alert/
+lib/presentation/alert/
 ├── bloc/
 │   ├── alert_cubit.dart           # 3s countdown logic
 │   └── alert_state.dart           # UI States
@@ -187,11 +187,11 @@ class AlertCubit extends Cubit<AlertState> {
 vanguard_ops/
 ├── lib/
 │   ├── main.dart                    Entry point
-│   ├── service_loacator.dart        GetIt DI setup
+│   ├── service_locator.dart        GetIt DI setup
 │   ├── common/                      Common components
 │   │   ├── bloc/
 │   │   ├── helper/
-│   │   └── wigets/
+│   │   └── widgets/
 │   ├── core/                        Config & Services
 │   │   ├── config/
 │   │   ├── services/
@@ -204,8 +204,8 @@ vanguard_ops/
 │   │   ├── alert/
 │   │   ├── auth/
 │   │   └── contacts/
-│   └── presentaion/                 UI Layer
-│       ├── alert/                   
+│   └── presentation/                UI Layer
+│       ├── alert/
 │       ├── auth/
 │       ├── contact/
 │       ├── home/
@@ -282,8 +282,8 @@ shared_preferences: ^2.5.4    # Local storage
 
 ### Mapping
 ```yaml
-flutter_map: ^8.2.2           #  Multi-platform
-latlong2: ^0.9.1              # GPS Coordinates
+flutter_map: ^8.2.2           # Multi-platform mapping
+latlong2: ^0.9.1              # GPS coordinates
 ```
 
 ### Geolocation & UI
