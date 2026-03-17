@@ -84,11 +84,11 @@ Domain Layer (UseCases)
 Presentation Layer (Cubits + UI)
 ```
 
-### 3️⃣ flutter_map + latlong2 (Migration Stratégique)
+### 3. Geolocation & Mapping
 
-#### 🚀 Pourquoi cette Migration ?
+The application uses **flutter_map** and **latlong2** for displaying real-time location data on interactive maps. This enables emergency responders to visualize incident locations and coordinate operations across multiple platforms.
 
-**google_maps_flutter** → **flutter_map** (Changement Critique)
+
 
 
 
